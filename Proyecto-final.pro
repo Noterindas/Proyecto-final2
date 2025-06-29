@@ -11,11 +11,13 @@ CONFIG += c++17
 SOURCES += \
     goku.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    mapa.cpp
 
 HEADERS += \
     goku.h \
-    mainwindow.h
+    mainwindow.h \
+    mapa.h
 
 FORMS += \
     mainwindow.ui

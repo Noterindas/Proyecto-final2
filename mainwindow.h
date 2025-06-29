@@ -6,6 +6,7 @@
 #include <QTimer>
 #include "goku.h"
 #include <QKeyEvent>
+#include "Mapa.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {

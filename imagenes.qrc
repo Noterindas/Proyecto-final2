@@ -7,5 +7,7 @@
         <file>imagenes/GCAR.png</file>
         <file>imagenes/GP.png</file>
         <file>imagenes/GP2.png</file>
+        <file>imagenes/pared.png</file>
+        <file>imagenes/pared2.png</file>
     </qresource>
 </RCC>

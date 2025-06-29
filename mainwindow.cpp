@@ -15,7 +15,10 @@ MainWindow::MainWindow(QWidget *parent)
     escena->addItem(goku->obtenerItem());
 
     connect(timer, &QTimer::timeout, this, &MainWindow::animarSprite);
-    timer->start(80);
+    timer->start(50);
+
+    Mapa* mapa = new Mapa(escena);
+    mapa->generarMapa();
 }
 
 void MainWindow::animarSprite()
