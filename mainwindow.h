@@ -2,6 +2,10 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QGraphicsScene>
+#include <QTimer>
+#include "goku.h"
+#include <QKeyEvent>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -17,7 +21,20 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+protected:
+    void keyPressEvent(QKeyEvent *event) ;
+    void keyReleaseEvent(QKeyEvent *event) ;
+    void direccionActual();
+
+private slots:
+    void animarSprite();
+
 private:
     Ui::MainWindow *ui;
+    QGraphicsScene* escena;
+    QTimer* timer;
+    Goku* goku;
+    QSet<int> teclasPresionadas;
 };
-#endif // MAINWINDOW_H
+
+#endif

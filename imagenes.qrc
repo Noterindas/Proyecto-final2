@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>imagenes/goku.jpg</file>
+        <file>imagenes/GokuCorreDerecho.png</file>
+        <file>imagenes/GCD.png</file>
+        <file>imagenes/GCA.png</file>
+        <file>imagenes/GCAR.png</file>
+        <file>imagenes/GP.png</file>
+        <file>imagenes/GP2.png</file>
+    </qresource>
+</RCC>
