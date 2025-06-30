@@ -1,7 +1,7 @@
 #include "goku.h"
 
 Goku::Goku()
-    : x(0), y(0), posX(60), posY(60)
+    : x(0), y(0), posX(80), posY(80)
 {
     spriteDerecha = new QPixmap(":/imagenes/GokuCorreDerecho.png");
     anchoDerecha = 100;
@@ -32,16 +32,6 @@ Goku::Goku()
     item->setPos(posX, posY);
 }
 
-void Goku::animar()
-{
-    x += anchoActual;
-    if (x >= spriteActual->width()) {
-        x = 0;
-    }
-
-    item->setPixmap(spriteActual->copy(x, y, anchoActual, altoActual).scaled(50, 50, Qt::KeepAspectRatio, Qt::SmoothTransformation));
-}
-
 void Goku::moverDerecha()
 {
     if (spriteActual != spriteDerecha) {
@@ -50,9 +40,6 @@ void Goku::moverDerecha()
         altoActual = altoDerecha;
         x = 0;
     }
-
-    posX += 5;
-    item->setPos(posX, posY);
 }
 
 
@@ -64,9 +51,6 @@ void Goku::moverIzquierda()
         altoActual = altoIzquierda;
         x = 0;
     }
-
-    posX -= 5;
-    item->setPos(posX, posY);
 }
 
 
@@ -78,11 +62,7 @@ void Goku::moverArriba()
         altoActual = altoArriba;
         x = 0;
     }
-
-    posY -= 5;
-    item->setPos(posX, posY);
 }
-
 
 void Goku::moverAbajo()
 {
@@ -92,9 +72,16 @@ void Goku::moverAbajo()
         altoActual = altoAbajo;
         x = 0;
     }
+}
 
-    posY += 5;
-    item->setPos(posX, posY);
+void Goku::animar()
+{
+    x += anchoActual;
+    if (x >= spriteActual->width()) {
+        x = 0;
+    }
+
+    item->setPixmap(spriteActual->copy(x, y, anchoActual, altoActual).scaled(50, 50, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 }
 
 void Goku::detener()

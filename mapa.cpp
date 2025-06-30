@@ -1,4 +1,4 @@
-#include "Mapa.h"
+#include "mapa.h"
 #include <QBrush>
 #include <QColor>
 
@@ -17,7 +17,12 @@ void Mapa::generarMapa()
                 QGraphicsPixmapItem* item = new QGraphicsPixmapItem(imagenPared.scaled(tamañoCelda, tamañoCelda, Qt::KeepAspectRatio, Qt::SmoothTransformation));
                 item->setPos(col * tamañoCelda, fila * tamañoCelda);
                 escena->addItem(item);
+                paredes.append(item);
             }
         }
     }
+}
+
+QVector<QGraphicsItem*> Mapa::obtenerParedes() const {
+    return paredes;
 }

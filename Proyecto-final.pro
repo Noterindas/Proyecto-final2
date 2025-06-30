@@ -12,12 +12,14 @@ SOURCES += \
     goku.cpp \
     main.cpp \
     mainwindow.cpp \
-    mapa.cpp
+    mapa.cpp \
+    obstaculos.cpp
 
 HEADERS += \
     goku.h \
     mainwindow.h \
-    mapa.h
+    mapa.h \
+    obstaculos.h
 
 FORMS += \
     mainwindow.ui

@@ -35,7 +35,10 @@ private:
     QGraphicsScene* escena;
     QTimer* timer;
     Goku* goku;
+    Mapa* mapa;
     QSet<int> teclasPresionadas;
+    bool hayColisionConPared();
+
 };
 
 #endif

@@ -17,45 +17,71 @@ MainWindow::MainWindow(QWidget *parent)
     connect(timer, &QTimer::timeout, this, &MainWindow::animarSprite);
     timer->start(50);
 
-    Mapa* mapa = new Mapa(escena);
+    mapa = new Mapa(escena);
     mapa->generarMapa();
 }
 
 void MainWindow::animarSprite()
 {
     bool seMovio = false;
+    int dx = 0, dy = 0;
 
     if (teclasPresionadas.contains(Qt::Key_D)) {
+        dx = 6;
         goku->moverDerecha();
-        seMovio = true;
     } else if (teclasPresionadas.contains(Qt::Key_A)) {
+        dx = -6;
         goku->moverIzquierda();
-        seMovio = true;
     } else if (teclasPresionadas.contains(Qt::Key_W)) {
+        dy = -6;
         goku->moverArriba();
-        seMovio = true;
     } else if (teclasPresionadas.contains(Qt::Key_S)) {
+        dy = 6;
         goku->moverAbajo();
-        seMovio = true;
     }
 
-    if (!seMovio) {
-        goku->detener();
-    } else {
-        goku->animar();
+    if (dx != 0 || dy != 0) {
+        QPointF posActual = goku->obtenerItem()->pos();
+        QPointF nuevaPos = posActual + QPointF(dx, dy);
+
+        goku->obtenerItem()->setPos(nuevaPos);
+
+        if (!hayColisionConPared()) {
+            seMovio = true;
+        } else {
+            goku->obtenerItem()->setPos(posActual);
+        }
     }
+
+    if (!seMovio)
+        goku->detener();
+    else
+        goku->animar();
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *event)
 {
     teclasPresionadas.insert(event->key());
-    QMainWindow::keyPressEvent(event);
 }
 
 void MainWindow::keyReleaseEvent(QKeyEvent *event)
 {
     teclasPresionadas.remove(event->key());
-    QMainWindow::keyReleaseEvent(event);
+}
+
+bool MainWindow::hayColisionConPared()
+{
+    QRectF gokuRect = goku->obtenerItem()->sceneBoundingRect();
+
+    for (QGraphicsItem* pared : mapa->obtenerParedes()) {
+        QRectF paredRect = pared->sceneBoundingRect();
+
+        if (gokuRect.intersects(paredRect)) {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 MainWindow::~MainWindow()
