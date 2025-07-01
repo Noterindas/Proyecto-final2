@@ -29,6 +29,44 @@ MainWindow::MainWindow(QWidget *parent)
     timerC->start(100);
 
     connect(timerC, &QTimer::timeout, this, &MainWindow::moverCocodrilo);
+
+    serpi1 = new Serpiente(mapa, 70, 80);
+    serpi2 = new Serpiente(mapa, 516, 520);
+    serpi3 = new Serpiente(mapa, 810, 650);
+    serpi4 = new Serpiente(mapa, 1105, 380);
+
+    escena->addItem(serpi1->obtenerItem());
+    escena->addItem(serpi2->obtenerItem());
+    escena->addItem(serpi3->obtenerItem());
+    escena->addItem(serpi4->obtenerItem());
+
+    timerS = new QTimer(this);
+    timerS->start(100);
+
+    connect(timerC, &QTimer::timeout, this, &MainWindow::moverSerpiente);
+
+    dino1 = new Dinosaurio(mapa, 1345, 380);
+    dino2 = new Dinosaurio(mapa, 310, 520);
+    dino3 = new Dinosaurio(mapa, 676, 520);
+
+    escena->addItem(dino1->obtenerItem());
+    escena->addItem(dino2->obtenerItem());
+    escena->addItem(dino3->obtenerItem());
+
+    timerS = new QTimer(this);
+    timerS->start(100);
+
+    connect(timerC, &QTimer::timeout, this, &MainWindow::moverDinosaurio);
+
+    abeja1 = new Abejap(mapa, 224, 140);
+    abeja2 = new Abejap(mapa, 590, 520);
+
+    escena->addItem(abeja1->obtenerItem());
+    escena->addItem(abeja2->obtenerItem());
+    timerAp = new QTimer(this);
+    timerAp->start(100);
+
+    connect(timerC, &QTimer::timeout, this, &MainWindow::moverAbeja);
 }
 
 void MainWindow::animarSprite()
@@ -78,6 +116,57 @@ void MainWindow::moverCocodrilo()
 
     if (goku->obtenerItem()->collidesWithItem(coco1->obtenerItem()) ||
         goku->obtenerItem()->collidesWithItem(coco2->obtenerItem())) {
+
+        goku->reiniciarPosicion();
+    }
+}
+
+void MainWindow::moverSerpiente()
+{
+    serpi1->animar();
+    serpi1->mover();
+    serpi2->animar();
+    serpi2->mover();
+    serpi3->animar();
+    serpi3->mover();
+    serpi4->animar();
+    serpi4->mover();
+
+    if (goku->obtenerItem()->collidesWithItem(serpi1->obtenerItem()) ||
+        goku->obtenerItem()->collidesWithItem(serpi2->obtenerItem()) ||
+        goku->obtenerItem()->collidesWithItem(serpi3->obtenerItem()) ||
+        goku->obtenerItem()->collidesWithItem(serpi4->obtenerItem())) {
+
+        goku->reiniciarPosicion();
+    }
+}
+
+void MainWindow::moverDinosaurio()
+{
+    dino1->animar();
+    dino1->mover();
+    dino2->animar();
+    dino2->mover();
+    dino3->animar();
+    dino3->mover();
+
+    if (goku->obtenerItem()->collidesWithItem(dino1->obtenerItem()) ||
+        goku->obtenerItem()->collidesWithItem(dino2->obtenerItem()) ||
+        goku->obtenerItem()->collidesWithItem(dino3->obtenerItem())) {
+
+        goku->reiniciarPosicion();
+    }
+}
+
+void MainWindow::moverAbeja()
+{
+    abeja1->animar();
+    abeja1->mover();
+    abeja2->animar();
+    abeja2->mover();
+
+    if (goku->obtenerItem()->collidesWithItem(abeja1->obtenerItem()) ||
+        goku->obtenerItem()->collidesWithItem(abeja2->obtenerItem())) {
 
         goku->reiniciarPosicion();
     }

@@ -9,17 +9,23 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    Cocodrilo.cpp \
+    abejap.cpp \
+    cocodrilo.cpp \
+    dinosaurio.cpp \
     goku.cpp \
     main.cpp \
     mainwindow.cpp \
-    mapa.cpp
+    mapa.cpp \
+    serpiente.cpp
 
 HEADERS += \
-    Cocodrilo.h \
+    abejap.h \
+    cocodrilo.h \
+    dinosaurio.h \
     goku.h \
     mainwindow.h \
-    mapa.h
+    mapa.h \
+    serpiente.h
 
 FORMS += \
     mainwindow.ui

@@ -11,5 +11,11 @@
         <file>imagenes/pared2.png</file>
         <file>imagenes/cocodrilo.png</file>
         <file>imagenes/cocodriloIzquierdo.png</file>
+        <file>imagenes/serpienteArriba.png</file>
+        <file>imagenes/serpiente.png</file>
+        <file>imagenes/dinosaurio.png</file>
+        <file>imagenes/dinosaurioArriba.png</file>
+        <file>imagenes/abeja.png</file>
+        <file>imagenes/abejaArriba.png</file>
     </qresource>
 </RCC>
