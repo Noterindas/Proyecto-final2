@@ -9,6 +9,7 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    abejag.cpp \
     abejap.cpp \
     cocodrilo.cpp \
     dinosaurio.cpp \
@@ -19,6 +20,7 @@ SOURCES += \
     serpiente.cpp
 
 HEADERS += \
+    abejag.h \
     abejap.h \
     cocodrilo.h \
     dinosaurio.h \

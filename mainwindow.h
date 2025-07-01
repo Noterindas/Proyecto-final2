@@ -11,6 +11,7 @@
 #include "serpiente.h"
 #include "dinosaurio.h"
 #include "abejap.h"
+#include "abejag.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -37,6 +38,7 @@ private slots:
     void moverSerpiente();
     void moverDinosaurio();
     void moverAbeja();
+    void moverAbejag();
 
 private:
     Ui::MainWindow *ui;
@@ -45,6 +47,7 @@ private:
     QTimer* timerC;
     QTimer* timerS;
     QTimer* timerAp;
+    QTimer* timerAg;
     Goku* goku;
     Cocodrilo* coco1;
     Cocodrilo* coco2;
@@ -57,6 +60,7 @@ private:
     Dinosaurio* dino3;
     Abejap* abeja1;
     Abejap* abeja2;
+    Abejag* abeja;
     Mapa* mapa;
     QSet<int> teclasPresionadas;
     bool hayColisionConPared();

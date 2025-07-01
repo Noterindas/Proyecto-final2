@@ -17,5 +17,6 @@
         <file>imagenes/dinosaurioArriba.png</file>
         <file>imagenes/abeja.png</file>
         <file>imagenes/abejaArriba.png</file>
+        <file>imagenes/abejaCircular.png</file>
     </qresource>
 </RCC>

@@ -67,6 +67,13 @@ MainWindow::MainWindow(QWidget *parent)
     timerAp->start(100);
 
     connect(timerC, &QTimer::timeout, this, &MainWindow::moverAbeja);
+
+    abeja = new Abejag(mapa, 450,295,78);
+    escena->addItem(abeja->obtenerItem());
+    timerAg = new QTimer(this);
+    timerAg->start(80);
+
+    connect(timerC, &QTimer::timeout, this, &MainWindow::moverAbejag);
 }
 
 void MainWindow::animarSprite()
@@ -167,6 +174,18 @@ void MainWindow::moverAbeja()
 
     if (goku->obtenerItem()->collidesWithItem(abeja1->obtenerItem()) ||
         goku->obtenerItem()->collidesWithItem(abeja2->obtenerItem())) {
+
+        goku->reiniciarPosicion();
+    }
+}
+
+void MainWindow::moverAbejag()
+{
+    abeja->animar();
+    abeja->mover();
+
+
+    if (goku->obtenerItem()->collidesWithItem(abeja->obtenerItem())) {
 
         goku->reiniciarPosicion();
     }
