@@ -1,8 +1,12 @@
 #include "goku.h"
 
 Goku::Goku()
-    : x(0), y(0), posX(80), posY(80)
 {
+    x=0;
+    y=0;
+    posX=1640;
+    posY=380;
+
     spriteDerecha = new QPixmap(":/imagenes/GokuCorreDerecho.png");
     anchoDerecha = 100;
     altoDerecha = 100;

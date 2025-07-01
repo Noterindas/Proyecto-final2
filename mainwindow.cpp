@@ -15,10 +15,17 @@ MainWindow::MainWindow(QWidget *parent)
     escena->addItem(goku->obtenerItem());
 
     connect(timer, &QTimer::timeout, this, &MainWindow::animarSprite);
-    timer->start(50);
+    timer->start(80);
 
     mapa = new Mapa(escena);
     mapa->generarMapa();
+
+    coco = new Cocodrilo(mapa);
+    escena->addItem(coco->obtenerItem());
+    timerC = new QTimer(this);
+    timerC->start(100);
+
+    connect(timerC, &QTimer::timeout, this, &MainWindow::moverCocodrilo);
 }
 
 void MainWindow::animarSprite()
@@ -59,14 +66,10 @@ void MainWindow::animarSprite()
         goku->animar();
 }
 
-void MainWindow::keyPressEvent(QKeyEvent *event)
+void MainWindow::moverCocodrilo()
 {
-    teclasPresionadas.insert(event->key());
-}
-
-void MainWindow::keyReleaseEvent(QKeyEvent *event)
-{
-    teclasPresionadas.remove(event->key());
+    coco->animar();
+    coco->mover();
 }
 
 bool MainWindow::hayColisionConPared()
@@ -82,6 +85,16 @@ bool MainWindow::hayColisionConPared()
     }
 
     return false;
+}
+
+void MainWindow::keyPressEvent(QKeyEvent *event)
+{
+    teclasPresionadas.insert(event->key());
+}
+
+void MainWindow::keyReleaseEvent(QKeyEvent *event)
+{
+    teclasPresionadas.remove(event->key());
 }
 
 MainWindow::~MainWindow()

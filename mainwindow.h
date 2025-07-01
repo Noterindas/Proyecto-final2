@@ -7,6 +7,7 @@
 #include "goku.h"
 #include <QKeyEvent>
 #include "mapa.h"
+#include "Cocodrilo.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -29,12 +30,15 @@ protected:
 
 private slots:
     void animarSprite();
+    void moverCocodrilo();
 
 private:
     Ui::MainWindow *ui;
     QGraphicsScene* escena;
     QTimer* timer;
+    QTimer* timerC;
     Goku* goku;
+    Cocodrilo* coco;
     Mapa* mapa;
     QSet<int> teclasPresionadas;
     bool hayColisionConPared();
