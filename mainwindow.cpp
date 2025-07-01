@@ -75,6 +75,12 @@ void MainWindow::moverCocodrilo()
     coco1->mover();
     coco2->animar();
     coco2->mover();
+
+    if (goku->obtenerItem()->collidesWithItem(coco1->obtenerItem()) ||
+        goku->obtenerItem()->collidesWithItem(coco2->obtenerItem())) {
+
+        goku->reiniciarPosicion();
+    }
 }
 
 bool MainWindow::hayColisionConPared()

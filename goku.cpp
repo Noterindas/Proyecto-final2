@@ -6,6 +6,7 @@ Goku::Goku()
     y=0;
     posX=1640;
     posY=380;
+    posicionInicial = QPointF(posX, posY);
 
     spriteDerecha = new QPixmap(":/imagenes/GokuCorreDerecho.png");
     anchoDerecha = 100;
@@ -98,6 +99,11 @@ void Goku::detener()
     }
 
     item->setPixmap(spriteActual->copy(x, y, anchoActual, altoActual).scaled(50, 50, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+}
+
+void Goku::reiniciarPosicion()
+{
+    item->setPos(posicionInicial);
 }
 
 QGraphicsPixmapItem* Goku::obtenerItem()

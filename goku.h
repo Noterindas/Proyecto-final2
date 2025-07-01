@@ -15,6 +15,7 @@ public:
     void moverArriba();
     void moverAbajo();
     void detener();
+    void reiniciarPosicion();
     QGraphicsPixmapItem* obtenerItem();
 
 private:
@@ -24,6 +25,7 @@ private:
     QPixmap* spriteAbajo;
     QPixmap* spriteActual;
     QPixmap* spriteQuieto;
+    QPointF posicionInicial;
     int anchoQuieto, altoQuieto;
     int anchoDerecha, altoDerecha;
     int anchoIzquierda, altoIzquierda;
