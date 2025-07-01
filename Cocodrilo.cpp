@@ -1,16 +1,16 @@
 #include "cocodrilo.h"
 #include "mapa.h"
 
-Cocodrilo::Cocodrilo(Mapa* mapa) : mapa(mapa)
+Cocodrilo::Cocodrilo(Mapa* mapa, int xInicial, int yInicial) : mapa(mapa)
 {
     x = 0;
     y = 0;
-    posX = 1480;
-    posY = 240;
+    posX = xInicial;
+    posY = yInicial;
     ancho = 100;
     alto = 100;
     direccion = 1;
-    velocidad = 9;
+    velocidad = 10;
 
     sprite = new QPixmap(":/imagenes/cocodrilo.png");
     spriteIzquierdo = new QPixmap(":/imagenes/cocodriloIzquierdo.png");

@@ -20,8 +20,11 @@ MainWindow::MainWindow(QWidget *parent)
     mapa = new Mapa(escena);
     mapa->generarMapa();
 
-    coco = new Cocodrilo(mapa);
-    escena->addItem(coco->obtenerItem());
+    coco1 = new Cocodrilo(mapa, 1480, 240);
+    coco2 = new Cocodrilo(mapa, 1480, 540);
+
+    escena->addItem(coco1->obtenerItem());
+    escena->addItem(coco2->obtenerItem());
     timerC = new QTimer(this);
     timerC->start(100);
 
@@ -68,8 +71,10 @@ void MainWindow::animarSprite()
 
 void MainWindow::moverCocodrilo()
 {
-    coco->animar();
-    coco->mover();
+    coco1->animar();
+    coco1->mover();
+    coco2->animar();
+    coco2->mover();
 }
 
 bool MainWindow::hayColisionConPared()
@@ -100,6 +105,8 @@ void MainWindow::keyReleaseEvent(QKeyEvent *event)
 MainWindow::~MainWindow()
 {
     delete goku;
+    delete coco1;
+    delete coco2;
     delete timer;
     delete escena;
     delete ui;

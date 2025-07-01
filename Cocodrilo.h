@@ -7,7 +7,7 @@
 
 class Cocodrilo {
 public:
-    Cocodrilo(Mapa* mapa);  // recibe el mapa
+    Cocodrilo(Mapa* mapa, int xInicial, int yInicial);
     ~Cocodrilo();
 
     void animar();
@@ -19,7 +19,7 @@ private:
     QPixmap* spriteIzquierdo;
     QPixmap* spriteActual;
     QGraphicsPixmapItem* item;
-    Mapa* mapa;  // puntero al mapa
+    Mapa* mapa;
     int x, y;
     int ancho, alto;
     int posX, posY;

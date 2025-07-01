@@ -38,7 +38,8 @@ private:
     QTimer* timer;
     QTimer* timerC;
     Goku* goku;
-    Cocodrilo* coco;
+    Cocodrilo* coco1;
+    Cocodrilo* coco2;
     Mapa* mapa;
     QSet<int> teclasPresionadas;
     bool hayColisionConPared();
