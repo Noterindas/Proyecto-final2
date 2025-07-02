@@ -13,6 +13,8 @@ SOURCES += \
     abejap.cpp \
     cocodrilo.cpp \
     dinosaurio.cpp \
+    gamerover.cpp \
+    ganaste.cpp \
     goku.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -24,12 +26,16 @@ HEADERS += \
     abejap.h \
     cocodrilo.h \
     dinosaurio.h \
+    gamerover.h \
+    ganaste.h \
     goku.h \
     mainwindow.h \
     mapa.h \
     serpiente.h
 
 FORMS += \
+    gamerover.ui \
+    ganaste.ui \
     mainwindow.ui
 
 # Default rules for deployment.

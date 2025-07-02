@@ -18,5 +18,7 @@
         <file>imagenes/abeja.png</file>
         <file>imagenes/abejaArriba.png</file>
         <file>imagenes/abejaCircular.png</file>
+        <file>imagenes/GameOver.jpeg</file>
+        <file>imagenes/Win.jpeg</file>
     </qresource>
 </RCC>

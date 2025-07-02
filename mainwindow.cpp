@@ -74,6 +74,13 @@ MainWindow::MainWindow(QWidget *parent)
     timerAg->start(80);
 
     connect(timerC, &QTimer::timeout, this, &MainWindow::moverAbejag);
+
+    vidas = 3;
+}
+
+void MainWindow::actualizarLabelVidas()
+{
+    ui->labelVidas->setText("Vidas: " + QString::number(vidas));
 }
 
 void MainWindow::animarSprite()
@@ -112,6 +119,18 @@ void MainWindow::animarSprite()
         goku->detener();
     else
         goku->animar();
+    QPointF pos = goku->obtenerItem()->pos();
+
+    if (pos.x() >= 5 && pos.x() <= 15 &&
+        pos.y() >= 670 && pos.y() <= 680) {
+
+        Ganaste ventana(this);
+        if (ventana.exec() == QDialog::Accepted && ventana.continuar()) {
+            reiniciarJuego();
+        } else {
+            close();
+        }
+    }
 }
 
 void MainWindow::moverCocodrilo()
@@ -125,6 +144,17 @@ void MainWindow::moverCocodrilo()
         goku->obtenerItem()->collidesWithItem(coco2->obtenerItem())) {
 
         goku->reiniciarPosicion();
+        vidas--;
+        actualizarLabelVidas();
+
+        if (vidas <= 0) {
+            GamerOver ventana(this);
+            if (ventana.exec() == QDialog::Accepted && ventana.quiereReintentar()) {
+                reiniciarJuego();
+            } else {
+                close();
+            }
+        }
     }
 }
 
@@ -145,6 +175,17 @@ void MainWindow::moverSerpiente()
         goku->obtenerItem()->collidesWithItem(serpi4->obtenerItem())) {
 
         goku->reiniciarPosicion();
+        vidas--;
+        actualizarLabelVidas();
+
+        if (vidas <= 0) {
+            GamerOver ventana(this);
+            if (ventana.exec() == QDialog::Accepted && ventana.quiereReintentar()) {
+                reiniciarJuego();
+            } else {
+                close();
+            }
+        }
     }
 }
 
@@ -162,6 +203,17 @@ void MainWindow::moverDinosaurio()
         goku->obtenerItem()->collidesWithItem(dino3->obtenerItem())) {
 
         goku->reiniciarPosicion();
+        vidas--;
+        actualizarLabelVidas();
+
+        if (vidas <= 0) {
+            GamerOver ventana(this);
+            if (ventana.exec() == QDialog::Accepted && ventana.quiereReintentar()) {
+                reiniciarJuego();
+            } else {
+                close();
+            }
+        }
     }
 }
 
@@ -176,6 +228,17 @@ void MainWindow::moverAbeja()
         goku->obtenerItem()->collidesWithItem(abeja2->obtenerItem())) {
 
         goku->reiniciarPosicion();
+        vidas--;
+        actualizarLabelVidas();
+
+        if (vidas <= 0) {
+            GamerOver ventana(this);
+            if (ventana.exec() == QDialog::Accepted && ventana.quiereReintentar()) {
+                reiniciarJuego();
+            } else {
+                close();
+            }
+        }
     }
 }
 
@@ -188,7 +251,27 @@ void MainWindow::moverAbejag()
     if (goku->obtenerItem()->collidesWithItem(abeja->obtenerItem())) {
 
         goku->reiniciarPosicion();
+        vidas--;
+        actualizarLabelVidas();
+
+        if (vidas <= 0) {
+            GamerOver ventana(this);
+            if (ventana.exec() == QDialog::Accepted && ventana.quiereReintentar()) {
+                reiniciarJuego();
+            } else {
+                close();
+            }
+        }
     }
+}
+
+void MainWindow::reiniciarJuego()
+{
+    vidas = 3;
+    actualizarLabelVidas();
+    goku->reiniciarPosicion();
+
+    teclasPresionadas.clear();
 }
 
 bool MainWindow::hayColisionConPared()
@@ -221,7 +304,22 @@ MainWindow::~MainWindow()
     delete goku;
     delete coco1;
     delete coco2;
+    delete serpi1;
+    delete serpi2;
+    delete serpi3;
+    delete serpi4;
+    delete dino1;
+    delete dino2;
+    delete dino3;
+    delete abeja1;
+    delete abeja2;
+    delete abeja;
     delete timer;
+    delete timerC;
+    delete timerS;
+    delete timerAp;
+    delete timerAg;
+    delete mapa;
     delete escena;
     delete ui;
 }

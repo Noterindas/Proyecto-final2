@@ -12,6 +12,9 @@
 #include "dinosaurio.h"
 #include "abejap.h"
 #include "abejag.h"
+#include <QMessageBox>
+#include "gamerover.h"
+#include "ganaste.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -64,6 +67,9 @@ private:
     Mapa* mapa;
     QSet<int> teclasPresionadas;
     bool hayColisionConPared();
+    int vidas;
+    void actualizarLabelVidas();
+    void reiniciarJuego();
 
 };
 
