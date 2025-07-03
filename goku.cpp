@@ -12,7 +12,7 @@ Goku::Goku()
     anchoDerecha = 100;
     altoDerecha = 100;
 
-    spriteIzquierda = new QPixmap(":/imagenes/GCD.png");
+    spriteIzquierda = new QPixmap(":/imagenes/GokuCorreDerechoV.png");
     anchoIzquierda = 100;
     altoIzquierda = 100;
 
