@@ -12,7 +12,6 @@
 #include "dinosaurio.h"
 #include "abejap.h"
 #include "abejag.h"
-#include <QMessageBox>
 #include "gamerover.h"
 #include "ganaste.h"
 

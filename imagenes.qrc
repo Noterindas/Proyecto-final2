@@ -21,5 +21,6 @@
         <file>imagenes/GameOver.jpeg</file>
         <file>imagenes/Win.jpeg</file>
         <file>imagenes/GokuCorreDerechoV.png</file>
+        <file>imagenes/cuadro.jpeg</file>
     </qresource>
 </RCC>
