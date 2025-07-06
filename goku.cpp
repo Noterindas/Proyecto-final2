@@ -8,41 +8,33 @@ Goku::Goku()
     posY=380;
     posicionInicial = QPointF(posX, posY);
 
+    ancho = 100;
+    alto = 100;
+
     spriteDerecha = new QPixmap(":/imagenes/GokuCorreDerecho.png");
-    anchoDerecha = 100;
-    altoDerecha = 100;
 
     spriteIzquierda = new QPixmap(":/imagenes/GokuCorreDerechoV.png");
-    anchoIzquierda = 100;
-    altoIzquierda = 100;
 
     spriteArriba = new QPixmap(":/imagenes/GCAR.png");
-    anchoArriba = 100;
-    altoArriba = 100;
 
     spriteAbajo = new QPixmap(":/imagenes/GCA.png");
-    anchoAbajo = 100;
-    altoAbajo = 100;
 
     spriteQuieto = new QPixmap(":/imagenes/GP2.png");
-    anchoQuieto = 100;
-    altoQuieto = 100;
+
+    spritePuno = new QPixmap(":/imagenes/GSalto.png");
 
     spriteActual = spriteQuieto;
-    anchoActual = anchoQuieto;
-    altoActual = altoQuieto;
 
-    item = new QGraphicsPixmapItem(spriteActual->copy(x, y, anchoActual, altoActual).scaled(50, 50, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    item = new QGraphicsPixmapItem(spriteActual->copy(x, y, ancho, alto).scaled(50, 50, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
     item->setPos(posX, posY);
+
 }
 
 void Goku::moverDerecha()
 {
     if (spriteActual != spriteDerecha) {
         spriteActual = spriteDerecha;
-        anchoActual = anchoDerecha;
-        altoActual = altoDerecha;
         x = 0;
     }
 }
@@ -52,8 +44,6 @@ void Goku::moverIzquierda()
 {
     if (spriteActual != spriteIzquierda) {
         spriteActual = spriteIzquierda;
-        anchoActual = anchoIzquierda;
-        altoActual = altoIzquierda;
         x = 0;
     }
 }
@@ -63,8 +53,6 @@ void Goku::moverArriba()
 {
     if (spriteActual != spriteArriba) {
         spriteActual = spriteArriba;
-        anchoActual = anchoArriba;
-        altoActual = altoArriba;
         x = 0;
     }
 }
@@ -73,32 +61,39 @@ void Goku::moverAbajo()
 {
     if (spriteActual != spriteAbajo) {
         spriteActual = spriteAbajo;
-        anchoActual = anchoAbajo;
-        altoActual = altoAbajo;
         x = 0;
     }
 }
 
 void Goku::animar()
 {
-    x += anchoActual;
+    x += ancho;
     if (x >= spriteActual->width()) {
         x = 0;
     }
 
-    item->setPixmap(spriteActual->copy(x, y, anchoActual, altoActual).scaled(50, 50, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    item->setPixmap(spriteActual->copy(x, y, ancho, alto).scaled(50, 50, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 }
+
 
 void Goku::detener()
 {
     if (spriteActual != spriteQuieto) {
         spriteActual = spriteQuieto;
-        anchoActual = anchoQuieto;
-        altoActual = altoQuieto;
         x = 0;
     }
 
-    item->setPixmap(spriteActual->copy(x, y, anchoActual, altoActual).scaled(50, 50, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    item->setPixmap(spriteActual->copy(x, y, ancho, alto).scaled(50, 50, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+}
+
+void Goku::puno()
+{
+    if (spriteActual != spritePuno) {
+        spriteActual = spritePuno;
+        x = 0;
+    }
+
+    item->setPixmap(spriteActual->copy(x, y, ancho, alto).scaled(50, 50, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 }
 
 void Goku::reiniciarPosicion()

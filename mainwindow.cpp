@@ -100,6 +100,8 @@ void MainWindow::animarSprite()
     } else if (teclasPresionadas.contains(Qt::Key_S)) {
         dy = 6;
         goku->moverAbajo();
+    } else if (teclasPresionadas.contains(Qt::Key_C)) {
+        goku->puno();
     }
 
     if (dx != 0 || dy != 0) {
@@ -115,10 +117,11 @@ void MainWindow::animarSprite()
         }
     }
 
-    if (!seMovio)
+    if (!seMovio) {
         goku->detener();
-    else
+    } else {
         goku->animar();
+    }
     QPointF pos = goku->obtenerItem()->pos();
 
     if (pos.x() >= 5 && pos.x() <= 15 &&
