@@ -65,6 +65,14 @@ void Goku::moverAbajo()
     }
 }
 
+void Goku::puno()
+{
+    if (spriteActual != spritePuno) {
+        spriteActual = spritePuno;
+        x = 0;
+    }
+}
+
 void Goku::animar()
 {
     x += ancho;
@@ -80,16 +88,6 @@ void Goku::detener()
 {
     if (spriteActual != spriteQuieto) {
         spriteActual = spriteQuieto;
-        x = 0;
-    }
-
-    item->setPixmap(spriteActual->copy(x, y, ancho, alto).scaled(50, 50, Qt::KeepAspectRatio, Qt::SmoothTransformation));
-}
-
-void Goku::puno()
-{
-    if (spriteActual != spritePuno) {
-        spriteActual = spritePuno;
         x = 0;
     }
 
