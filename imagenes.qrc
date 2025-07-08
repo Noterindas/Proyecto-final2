@@ -21,7 +21,16 @@
         <file>imagenes/Win.jpeg</file>
         <file>imagenes/GokuCorreDerechoV.png</file>
         <file>imagenes/cuadro.jpeg</file>
-        <file>imagenes/GPuno.png</file>
         <file>imagenes/GSalto.png</file>
+        <file>imagenes/GPuno.png</file>
+        <file>imagenes/GSPa.png</file>
+        <file>imagenes/GSPu.png</file>
+        <file>imagenes/NP.png</file>
+        <file>imagenes/NPa.png</file>
+        <file>imagenes/NPu.png</file>
+        <file>imagenes/NSalto.png</file>
+        <file>imagenes/NSPa.png</file>
+        <file>imagenes/NSPu.png</file>
+        <file>imagenes/GPa.png</file>
     </qresource>
 </RCC>

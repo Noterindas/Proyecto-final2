@@ -21,7 +21,15 @@ Goku::Goku()
 
     spriteQuieto = new QPixmap(":/imagenes/GP2.png");
 
-    spritePuno = new QPixmap(":/imagenes/GSalto.png");
+    spritePuno = new QPixmap(":/imagenes/GPuno.png");
+
+    spriteSalto = new QPixmap(":/imagenes/GSalto.png");
+
+    spritePatada = new QPixmap(":/imagenes/GPa.png");
+
+    spriteSPa = new QPixmap(":/imagenes/GSPa.png");
+
+    spriteSPu= new QPixmap(":/imagenes/GSPu.png");
 
     spriteActual = spriteQuieto;
 
@@ -72,6 +80,39 @@ void Goku::puno()
         x = 0;
     }
 }
+
+void Goku::salto()
+{
+    if (spriteActual != spriteSalto) {
+        spriteActual = spriteSalto;
+        x = 0;
+    }
+}
+
+void Goku::patada()
+{
+    if (spriteActual != spritePatada) {
+        spriteActual = spritePatada;
+        x = 0;
+    }
+}
+
+void Goku::SPu()
+{
+    if (spriteActual != spriteSPu) {
+        spriteActual = spriteSPu;
+        x = 0;
+    }
+}
+
+void Goku::SPa()
+{
+    if (spriteActual != spriteSPa) {
+        spriteActual = spriteSPa;
+        x = 0;
+    }
+}
+
 
 void Goku::animar()
 {

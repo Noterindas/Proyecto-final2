@@ -85,23 +85,45 @@ void MainWindow::actualizarLabelVidas()
 
 void MainWindow::animarSprite()
 {
-    bool seMovio = false;
+    bool estaAtacando = false;
     int dx = 0, dy = 0;
 
     if (teclasPresionadas.contains(Qt::Key_D)) {
-        dx = 6;
+
         goku->moverDerecha();
-    } else if (teclasPresionadas.contains(Qt::Key_A)) {
+                dx = 6;
+    }
+    else if (teclasPresionadas.contains(Qt::Key_A)) {
         dx = -6;
         goku->moverIzquierda();
-    } else if (teclasPresionadas.contains(Qt::Key_W)) {
+    }
+    else if (teclasPresionadas.contains(Qt::Key_W)) {
         dy = -6;
         goku->moverArriba();
-    } else if (teclasPresionadas.contains(Qt::Key_S)) {
+    }
+    else if (teclasPresionadas.contains(Qt::Key_S)) {
         dy = 6;
         goku->moverAbajo();
-    } else if (teclasPresionadas.contains(Qt::Key_C)) {
+    }
+    else if (teclasPresionadas.contains(Qt::Key_Space) && teclasPresionadas.contains(Qt::Key_C  )) {
+        goku->SPu();
+        estaAtacando = true;
+    }
+    else if (teclasPresionadas.contains(Qt::Key_Space) && teclasPresionadas.contains(Qt::Key_V)) {
+        goku->SPa();
+        estaAtacando = true;
+    }
+    else if (teclasPresionadas.contains(Qt::Key_Space)) {
+        goku->salto();
+        estaAtacando = true;
+    }
+    else if (teclasPresionadas.contains(Qt::Key_C)) {
         goku->puno();
+        estaAtacando = true;
+    }
+    else if (teclasPresionadas.contains(Qt::Key_V)) {
+        goku->patada();
+        estaAtacando = true;
     }
 
     if (dx != 0 || dy != 0) {
@@ -110,18 +132,16 @@ void MainWindow::animarSprite()
 
         goku->obtenerItem()->setPos(nuevaPos);
 
-        if (!hayColisionConPared()) {
-            seMovio = true;
-        } else {
+        if (hayColisionConPared()) {
             goku->obtenerItem()->setPos(posActual);
         }
     }
 
-    if (!seMovio) {
+    if (dx == 0 && dy == 0 && !estaAtacando) {
         goku->detener();
-    } else {
-        goku->animar();
     }
+
+    goku->animar();
     QPointF pos = goku->obtenerItem()->pos();
 
     if (pos.x() >= 5 && pos.x() <= 15 &&

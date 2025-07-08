@@ -15,6 +15,10 @@ public:
     void moverArriba();
     void moverAbajo();
     void puno();
+    void salto();
+    void patada();
+    void SPa();
+    void SPu();
     void detener();
     void reiniciarPosicion();
     QGraphicsPixmapItem* obtenerItem();
@@ -36,6 +40,7 @@ private:
     int ancho, alto;
     int x, y;
     int posX, posY;
+
 };
 
 #endif
