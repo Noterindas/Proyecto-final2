@@ -23,13 +23,23 @@ Goku::Goku()
 
     spritePuno = new QPixmap(":/imagenes/GPuno.png");
 
+    spritePunoIzq = new QPixmap(":/imagenes/GPunoIzq.png");
+
     spriteSalto = new QPixmap(":/imagenes/GSalto.png");
+
+    spriteSaltoIzq = new QPixmap(":/imagenes/GSaltoIzq.png");
 
     spritePatada = new QPixmap(":/imagenes/GPa.png");
 
+    spritePatadaIzq = new QPixmap(":/imagenes/GPaIzq.png");
+
     spriteSPa = new QPixmap(":/imagenes/GSPa.png");
 
+    spriteSPaIzq = new QPixmap(":/imagenes/GSPaIzq.png");
+
     spriteSPu= new QPixmap(":/imagenes/GSPu.png");
+
+    spriteSPuIzq= new QPixmap(":/imagenes/GSPuIzq.png");
 
     spriteActual = spriteQuieto;
 
@@ -37,10 +47,13 @@ Goku::Goku()
 
     item->setPos(posX, posY);
 
+    mirandoDerecha = true;
+
 }
 
 void Goku::moverDerecha()
 {
+    mirandoDerecha = true;
     if (spriteActual != spriteDerecha) {
         spriteActual = spriteDerecha;
         x = 0;
@@ -50,6 +63,7 @@ void Goku::moverDerecha()
 
 void Goku::moverIzquierda()
 {
+    mirandoDerecha = false;
     if (spriteActual != spriteIzquierda) {
         spriteActual = spriteIzquierda;
         x = 0;
@@ -81,10 +95,26 @@ void Goku::puno()
     }
 }
 
+void Goku::punoIzq()
+{
+    if (spriteActual != spritePunoIzq) {
+        spriteActual = spritePunoIzq;
+        x = 0;
+    }
+}
+
 void Goku::salto()
 {
     if (spriteActual != spriteSalto) {
         spriteActual = spriteSalto;
+        x = 0;
+    }
+}
+
+void Goku::saltoIzq()
+{
+    if (spriteActual != spriteSaltoIzq) {
+        spriteActual = spriteSaltoIzq;
         x = 0;
     }
 }
@@ -97,6 +127,14 @@ void Goku::patada()
     }
 }
 
+void Goku::patadaIzq()
+{
+    if (spriteActual != spritePatadaIzq) {
+        spriteActual = spritePatadaIzq;
+        x = 0;
+    }
+}
+
 void Goku::SPu()
 {
     if (spriteActual != spriteSPu) {
@@ -105,10 +143,26 @@ void Goku::SPu()
     }
 }
 
+void Goku::SPuIzq()
+{
+    if (spriteActual != spriteSPuIzq) {
+        spriteActual = spriteSPuIzq;
+        x = 0;
+    }
+}
+
 void Goku::SPa()
 {
     if (spriteActual != spriteSPa) {
         spriteActual = spriteSPa;
+        x = 0;
+    }
+}
+
+void Goku::SPaIzq()
+{
+    if (spriteActual != spriteSPaIzq) {
+        spriteActual = spriteSPaIzq;
         x = 0;
     }
 }

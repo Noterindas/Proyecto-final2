@@ -32,5 +32,17 @@
         <file>imagenes/NSPa.png</file>
         <file>imagenes/NSPu.png</file>
         <file>imagenes/GPa.png</file>
+        <file>imagenes/GPunoIzq.png</file>
+        <file>imagenes/GPaIzq.png</file>
+        <file>imagenes/GSaltoIzq.png</file>
+        <file>imagenes/GSPuIzq.png</file>
+        <file>imagenes/GSPaIzq.png</file>
+        <file>imagenes/NPaIzq.png</file>
+        <file>imagenes/NPuIzq.png</file>
+        <file>imagenes/NSaltoIzq.png</file>
+        <file>imagenes/NSPaIzq.png</file>
+        <file>imagenes/NSPuIzq.png</file>
+        <file>imagenes/NCD.png</file>
+        <file>imagenes/NCDIzq.png</file>
     </qresource>
 </RCC>

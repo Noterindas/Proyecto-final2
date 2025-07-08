@@ -1,19 +1,17 @@
-#ifndef GOKU_H
-#define GOKU_H
+#ifndef NAM_H
+#define NAM_H
 
 #include <QGraphicsPixmapItem>
 #include <QPixmap>
 
-class Goku {
+class Nam {
 public:
-    Goku();
-    ~Goku();
+    Nam();
+    ~Nam();
 
     void animar();
     void moverDerecha();
     void moverIzquierda();
-    void moverArriba();
-    void moverAbajo();
     void puno();
     void punoIzq();
     void salto();
@@ -32,8 +30,6 @@ public:
 private:
     QPixmap* spriteDerecha;
     QPixmap* spriteIzquierda;
-    QPixmap* spriteArriba;
-    QPixmap* spriteAbajo;
     QPixmap* spriteActual;
     QPixmap* spriteQuieto;
     QPixmap* spritePuno;
@@ -51,7 +47,6 @@ private:
     int ancho, alto;
     int x, y;
     int posX, posY;
-
 };
 
 #endif

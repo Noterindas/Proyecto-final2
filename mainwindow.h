@@ -14,6 +14,8 @@
 #include "abejag.h"
 #include "gamerover.h"
 #include "ganaste.h"
+#include "nam.h"
+#include <QRandomGenerator>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -41,6 +43,7 @@ private slots:
     void moverDinosaurio();
     void moverAbeja();
     void moverAbejag();
+    void moverNamAutomaticamente();
 
 private:
     Ui::MainWindow *ui;
@@ -50,7 +53,9 @@ private:
     QTimer* timerS;
     QTimer* timerAp;
     QTimer* timerAg;
+    QTimer* timerNam;
     Goku* goku;
+    Nam* nam;
     Cocodrilo* coco1;
     Cocodrilo* coco2;
     Serpiente* serpi1;

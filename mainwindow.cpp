@@ -76,6 +76,13 @@ MainWindow::MainWindow(QWidget *parent)
     connect(timerC, &QTimer::timeout, this, &MainWindow::moverAbejag);
 
     vidas = 3;
+
+    nam = new Nam();
+    escena->addItem(nam->obtenerItem());
+
+    timerNam = new QTimer(this);
+    timerNam->start(150);
+    connect(timerNam, &QTimer::timeout, this, &MainWindow::moverNamAutomaticamente);
 }
 
 void MainWindow::actualizarLabelVidas()
@@ -88,15 +95,56 @@ void MainWindow::animarSprite()
     bool estaAtacando = false;
     int dx = 0, dy = 0;
 
-    if (teclasPresionadas.contains(Qt::Key_D)) {
+    if (teclasPresionadas.contains(Qt::Key_Space) && teclasPresionadas.contains(Qt::Key_C)) {
+        if (goku->mirandoDerecha)
+            goku->SPu();
+        else
+            goku->SPuIzq();
+        estaAtacando = true;
+    }
+    else if (teclasPresionadas.contains(Qt::Key_Space) && teclasPresionadas.contains(Qt::Key_V)) {
+        if (goku->mirandoDerecha)
+            goku->SPa();
+        else
+            goku->SPaIzq();
+        estaAtacando = true;
+    }
 
-        goku->moverDerecha();
-                dx = 6;
+    else if (teclasPresionadas.contains(Qt::Key_D)) {
+        dx = 6;
+        goku->mirandoDerecha = true;
+
+        if (teclasPresionadas.contains(Qt::Key_C)) {
+            goku->puno();
+            estaAtacando = true;
+        } else if (teclasPresionadas.contains(Qt::Key_V)) {
+            goku->patada();
+            estaAtacando = true;
+        } else if (teclasPresionadas.contains(Qt::Key_Space)) {
+            goku->salto();
+            estaAtacando = true;
+        } else {
+            goku->moverDerecha();
+        }
     }
     else if (teclasPresionadas.contains(Qt::Key_A)) {
         dx = -6;
-        goku->moverIzquierda();
+        goku->mirandoDerecha = false;
+
+        if (teclasPresionadas.contains(Qt::Key_C)) {
+            goku->punoIzq();
+            estaAtacando = true;
+        } else if (teclasPresionadas.contains(Qt::Key_V)) {
+            goku->patadaIzq();
+            estaAtacando = true;
+        } else if (teclasPresionadas.contains(Qt::Key_Space)) {
+            goku->saltoIzq();
+            estaAtacando = true;
+        } else {
+            goku->moverIzquierda();
+        }
     }
+
     else if (teclasPresionadas.contains(Qt::Key_W)) {
         dy = -6;
         goku->moverArriba();
@@ -105,31 +153,32 @@ void MainWindow::animarSprite()
         dy = 6;
         goku->moverAbajo();
     }
-    else if (teclasPresionadas.contains(Qt::Key_Space) && teclasPresionadas.contains(Qt::Key_C  )) {
-        goku->SPu();
-        estaAtacando = true;
-    }
-    else if (teclasPresionadas.contains(Qt::Key_Space) && teclasPresionadas.contains(Qt::Key_V)) {
-        goku->SPa();
-        estaAtacando = true;
-    }
+
     else if (teclasPresionadas.contains(Qt::Key_Space)) {
-        goku->salto();
+        if (goku->mirandoDerecha)
+            goku->salto();
+        else
+            goku->saltoIzq();
         estaAtacando = true;
     }
     else if (teclasPresionadas.contains(Qt::Key_C)) {
-        goku->puno();
+        if (goku->mirandoDerecha)
+            goku->puno();
+        else
+            goku->punoIzq();
         estaAtacando = true;
     }
     else if (teclasPresionadas.contains(Qt::Key_V)) {
-        goku->patada();
+        if (goku->mirandoDerecha)
+            goku->patada();
+        else
+            goku->patadaIzq();
         estaAtacando = true;
     }
 
     if (dx != 0 || dy != 0) {
         QPointF posActual = goku->obtenerItem()->pos();
         QPointF nuevaPos = posActual + QPointF(dx, dy);
-
         goku->obtenerItem()->setPos(nuevaPos);
 
         if (hayColisionConPared()) {
@@ -142,11 +191,9 @@ void MainWindow::animarSprite()
     }
 
     goku->animar();
+
     QPointF pos = goku->obtenerItem()->pos();
-
-    if (pos.x() >= 5 && pos.x() <= 15 &&
-        pos.y() >= 670 && pos.y() <= 680) {
-
+    if (pos.x() >= 5 && pos.x() <= 15 && pos.y() >= 670 && pos.y() <= 680) {
         Ganaste ventana(this);
         if (ventana.exec() == QDialog::Accepted && ventana.continuar()) {
             reiniciarJuego();
@@ -312,6 +359,47 @@ bool MainWindow::hayColisionConPared()
     return false;
 }
 
+void MainWindow::moverNamAutomaticamente()
+{
+    QPointF posNam = nam->obtenerItem()->pos();
+    QPointF posGoku = goku->obtenerItem()->pos();
+
+    qreal dx = 0;
+
+    if (posGoku.x() > posNam.x()) {
+        dx = 6;
+        nam->moverDerecha();
+    } else if (posGoku.x() < posNam.x()) {
+        dx = -6;
+        nam->moverIzquierda();
+    }
+
+    QPointF nuevaPos = posNam + QPointF(dx, 0);
+    nam->obtenerItem()->setPos(nuevaPos);
+
+    if (qAbs(posGoku.x() - posNam.x()) < 60 && qAbs(posGoku.y() - posNam.y()) < 40) {
+        int accion = QRandomGenerator::global()->bounded(3);
+        if (accion == 0) {
+            if (nam->mirandoDerecha)
+                nam->puno();
+            else
+                nam->punoIzq();
+        } else if (accion == 1) {
+            if (nam->mirandoDerecha)
+                nam->patada();
+            else
+                nam->patadaIzq();
+        } else {
+            if (nam->mirandoDerecha)
+                nam->salto();
+            else
+                nam->saltoIzq();
+        }
+    }
+
+    nam->animar();
+}
+
 void MainWindow::keyPressEvent(QKeyEvent *event)
 {
     teclasPresionadas.insert(event->key());
@@ -325,6 +413,7 @@ void MainWindow::keyReleaseEvent(QKeyEvent *event)
 MainWindow::~MainWindow()
 {
     delete goku;
+    delete nam;
     delete coco1;
     delete coco2;
     delete serpi1;
@@ -342,6 +431,7 @@ MainWindow::~MainWindow()
     delete timerS;
     delete timerAp;
     delete timerAg;
+    delete timerNam;
     delete mapa;
     delete escena;
     delete ui;

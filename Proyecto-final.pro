@@ -19,6 +19,7 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     mapa.cpp \
+    nam.cpp \
     serpiente.cpp
 
 HEADERS += \
@@ -31,6 +32,7 @@ HEADERS += \
     goku.h \
     mainwindow.h \
     mapa.h \
+    nam.h \
     serpiente.h
 
 FORMS += \
