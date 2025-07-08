@@ -81,7 +81,7 @@ MainWindow::MainWindow(QWidget *parent)
     escena->addItem(nam->obtenerItem());
 
     timerNam = new QTimer(this);
-    timerNam->start(150);
+    timerNam->start(110);
     connect(timerNam, &QTimer::timeout, this, &MainWindow::moverNamAutomaticamente);
 }
 
@@ -378,7 +378,7 @@ void MainWindow::moverNamAutomaticamente()
     nam->obtenerItem()->setPos(nuevaPos);
 
     if (qAbs(posGoku.x() - posNam.x()) < 60 && qAbs(posGoku.y() - posNam.y()) < 40) {
-        int accion = QRandomGenerator::global()->bounded(3);
+        int accion = QRandomGenerator::global()->bounded(5);
         if (accion == 0) {
             if (nam->mirandoDerecha)
                 nam->puno();
@@ -389,7 +389,18 @@ void MainWindow::moverNamAutomaticamente()
                 nam->patada();
             else
                 nam->patadaIzq();
-        } else {
+        } else if(accion == 2) {
+            if (nam->mirandoDerecha)
+                nam->SPa();
+            else
+                nam->SPaIzq();
+        } else if(accion == 3) {
+            if (nam->mirandoDerecha)
+                nam->SPu();
+            else
+                nam->SPuIzq();
+        }
+        else {
             if (nam->mirandoDerecha)
                 nam->salto();
             else
