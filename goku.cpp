@@ -4,8 +4,8 @@ Goku::Goku()
 {
     x=0;
     y=0;
-    posX=1640;
-    posY=380;
+    posX=20;
+    posY=675;
     posicionInicial = QPointF(posX, posY);
 
     ancho = 100;

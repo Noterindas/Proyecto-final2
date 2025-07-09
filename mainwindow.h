@@ -16,6 +16,7 @@
 #include "ganaste.h"
 #include "nam.h"
 #include <QRandomGenerator>
+#include "nivel2.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -51,6 +52,7 @@ private:
     QTimer* timer;
     QTimer* timerC;
     QTimer* timerS;
+    QTimer* timerD;
     QTimer* timerAp;
     QTimer* timerAg;
     QTimer* timerNam;
@@ -74,6 +76,9 @@ private:
     int vidas;
     void actualizarLabelVidas();
     void reiniciarJuego();
+    int nivelActual = 1;
+    void cargarNivel(int nivel);
+    Nivel2* nivel2 = nullptr;
 
 };
 

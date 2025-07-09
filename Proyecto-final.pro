@@ -20,6 +20,7 @@ SOURCES += \
     mainwindow.cpp \
     mapa.cpp \
     nam.cpp \
+    nivel2.cpp \
     serpiente.cpp
 
 HEADERS += \
@@ -33,6 +34,7 @@ HEADERS += \
     mainwindow.h \
     mapa.h \
     nam.h \
+    nivel2.h \
     serpiente.h
 
 FORMS += \

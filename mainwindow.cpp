@@ -9,85 +9,79 @@ MainWindow::MainWindow(QWidget *parent)
     escena = new QGraphicsScene(this);
     ui->graphicsView->setScene(escena);
 
-    timer = new QTimer(this);
     goku = new Goku();
-
-    escena->addItem(goku->obtenerItem());
-
+    timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &MainWindow::animarSprite);
     timer->start(80);
 
-    mapa = new Mapa(escena);
-    mapa->generarMapa();
-
-    coco1 = new Cocodrilo(mapa, 1480, 240);
-    coco2 = new Cocodrilo(mapa, 1480, 540);
-
-    escena->addItem(coco1->obtenerItem());
-    escena->addItem(coco2->obtenerItem());
-    timerC = new QTimer(this);
-    timerC->start(100);
-
-    connect(timerC, &QTimer::timeout, this, &MainWindow::moverCocodrilo);
-
-    serpi1 = new Serpiente(mapa, 70, 80);
-    serpi2 = new Serpiente(mapa, 516, 520);
-    serpi3 = new Serpiente(mapa, 810, 650);
-    serpi4 = new Serpiente(mapa, 1105, 380);
-
-    escena->addItem(serpi1->obtenerItem());
-    escena->addItem(serpi2->obtenerItem());
-    escena->addItem(serpi3->obtenerItem());
-    escena->addItem(serpi4->obtenerItem());
-
-    timerS = new QTimer(this);
-    timerS->start(100);
-
-    connect(timerC, &QTimer::timeout, this, &MainWindow::moverSerpiente);
-
-    dino1 = new Dinosaurio(mapa, 1345, 380);
-    dino2 = new Dinosaurio(mapa, 310, 520);
-    dino3 = new Dinosaurio(mapa, 676, 520);
-
-    escena->addItem(dino1->obtenerItem());
-    escena->addItem(dino2->obtenerItem());
-    escena->addItem(dino3->obtenerItem());
-
-    timerS = new QTimer(this);
-    timerS->start(100);
-
-    connect(timerC, &QTimer::timeout, this, &MainWindow::moverDinosaurio);
-
-    abeja1 = new Abejap(mapa, 224, 140);
-    abeja2 = new Abejap(mapa, 590, 520);
-
-    escena->addItem(abeja1->obtenerItem());
-    escena->addItem(abeja2->obtenerItem());
-    timerAp = new QTimer(this);
-    timerAp->start(100);
-
-    connect(timerC, &QTimer::timeout, this, &MainWindow::moverAbeja);
-
-    abeja = new Abejag(mapa, 450,295,78);
-    escena->addItem(abeja->obtenerItem());
-    timerAg = new QTimer(this);
-    timerAg->start(80);
-
-    connect(timerC, &QTimer::timeout, this, &MainWindow::moverAbejag);
-
     vidas = 3;
-
-    nam = new Nam();
-    escena->addItem(nam->obtenerItem());
-
-    timerNam = new QTimer(this);
-    timerNam->start(110);
-    connect(timerNam, &QTimer::timeout, this, &MainWindow::moverNamAutomaticamente);
+    nivelActual = 1;
+    cargarNivel(nivelActual);
 }
 
 void MainWindow::actualizarLabelVidas()
 {
     ui->labelVidas->setText("Vidas: " + QString::number(vidas));
+}
+
+void MainWindow::cargarNivel(int nivel)
+{
+    if (nivel == 1) {
+
+        mapa = new Mapa(escena);
+        mapa->generarMapa();
+
+        goku->reiniciarPosicion();
+        escena->addItem(goku->obtenerItem());
+
+        coco1 = new Cocodrilo(mapa, 1480, 240);
+        coco2 = new Cocodrilo(mapa, 1480, 540);
+        escena->addItem(coco1->obtenerItem());
+        escena->addItem(coco2->obtenerItem());
+
+        serpi1 = new Serpiente(mapa, 70, 80);
+        serpi2 = new Serpiente(mapa, 516, 520);
+        serpi3 = new Serpiente(mapa, 810, 650);
+        serpi4 = new Serpiente(mapa, 1105, 380);
+        escena->addItem(serpi1->obtenerItem());
+        escena->addItem(serpi2->obtenerItem());
+        escena->addItem(serpi3->obtenerItem());
+        escena->addItem(serpi4->obtenerItem());
+
+        dino1 = new Dinosaurio(mapa, 1345, 380);
+        dino2 = new Dinosaurio(mapa, 310, 520);
+        dino3 = new Dinosaurio(mapa, 676, 520);
+        escena->addItem(dino1->obtenerItem());
+        escena->addItem(dino2->obtenerItem());
+        escena->addItem(dino3->obtenerItem());
+
+        abeja1 = new Abejap(mapa, 224, 140);
+        abeja2 = new Abejap(mapa, 590, 520);
+        abeja = new Abejag(mapa, 450, 295, 78);
+        escena->addItem(abeja1->obtenerItem());
+        escena->addItem(abeja2->obtenerItem());
+        escena->addItem(abeja->obtenerItem());
+
+        timerC = new QTimer(this);
+        connect(timerC, &QTimer::timeout, this, &MainWindow::moverCocodrilo);
+        timerC->start(100);
+
+        timerS = new QTimer(this);
+        connect(timerS, &QTimer::timeout, this, &MainWindow::moverSerpiente);
+        timerS->start(100);
+
+        timerD = new QTimer(this);
+        connect(timerD, &QTimer::timeout, this, &MainWindow::moverDinosaurio);
+        timerD->start(100);
+
+        timerAp = new QTimer(this);
+        connect(timerAp, &QTimer::timeout, this, &MainWindow::moverAbeja);
+        timerAp->start(100);
+
+        timerAg = new QTimer(this);
+        connect(timerAg, &QTimer::timeout, this, &MainWindow::moverAbejag);
+        timerAg->start(80);
+    }
 }
 
 void MainWindow::animarSprite()
@@ -116,13 +110,10 @@ void MainWindow::animarSprite()
 
         if (teclasPresionadas.contains(Qt::Key_C)) {
             goku->puno();
-            estaAtacando = true;
         } else if (teclasPresionadas.contains(Qt::Key_V)) {
             goku->patada();
-            estaAtacando = true;
         } else if (teclasPresionadas.contains(Qt::Key_Space)) {
             goku->salto();
-            estaAtacando = true;
         } else {
             goku->moverDerecha();
         }
@@ -133,13 +124,10 @@ void MainWindow::animarSprite()
 
         if (teclasPresionadas.contains(Qt::Key_C)) {
             goku->punoIzq();
-            estaAtacando = true;
         } else if (teclasPresionadas.contains(Qt::Key_V)) {
             goku->patadaIzq();
-            estaAtacando = true;
         } else if (teclasPresionadas.contains(Qt::Key_Space)) {
             goku->saltoIzq();
-            estaAtacando = true;
         } else {
             goku->moverIzquierda();
         }
@@ -196,7 +184,12 @@ void MainWindow::animarSprite()
     if (pos.x() >= 5 && pos.x() <= 15 && pos.y() >= 670 && pos.y() <= 680) {
         Ganaste ventana(this);
         if (ventana.exec() == QDialog::Accepted && ventana.continuar()) {
-            reiniciarJuego();
+            nivelActual++;
+            if (nivelActual == 2) {
+                nivel2 = new Nivel2();
+                nivel2->iniciarNivel(goku);
+                ui->graphicsView->setScene(nivel2->obtenerEscena());
+            }
         } else {
             close();
         }
@@ -327,7 +320,8 @@ void MainWindow::moverAbejag()
         if (vidas <= 0) {
             GamerOver ventana(this);
             if (ventana.exec() == QDialog::Accepted && ventana.quiereReintentar()) {
-                reiniciarJuego();
+                nivelActual++;
+                cargarNivel(nivelActual);
             } else {
                 close();
             }
