@@ -7,6 +7,7 @@ Nam::Nam()
     posX = 1580;
     posY = 380;
     posicionInicial = QPointF(posX, posY);
+    vida = 100;
 
     ancho = 100;
     alto = 100;
@@ -130,6 +131,19 @@ void Nam::animar()
         x = 0;
     }
     item->setPixmap(spriteActual->copy(x, y, ancho, alto).scaled(50, 50, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+}
+
+void Nam::reducirVida(int cantidad) {
+    vida -= cantidad;
+    if (vida < 0) vida = 0;
+}
+
+int Nam::obtenerVida() const {
+    return vida;
+}
+
+void Nam::reiniciarVida() {
+    vida = 100;
 }
 
 void Nam::reiniciarPosicion()

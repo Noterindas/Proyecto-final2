@@ -28,6 +28,9 @@ public:
     void reiniciarPosicion();
     QGraphicsPixmapItem* obtenerItem();
     bool mirandoDerecha;
+    void reducirVida(int cantidad);
+    int obtenerVida() const;
+    void reiniciarVida();
 
 private:
     QPixmap* spriteDerecha;
@@ -51,6 +54,7 @@ private:
     int ancho, alto;
     int x, y;
     int posX, posY;
+    int vida;
 
 };
 

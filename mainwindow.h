@@ -17,6 +17,7 @@
 #include "nam.h"
 #include <QRandomGenerator>
 #include "nivel2.h"
+#include <QProgressBar>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -44,7 +45,6 @@ private slots:
     void moverDinosaurio();
     void moverAbeja();
     void moverAbejag();
-    void moverNamAutomaticamente();
 
 private:
     Ui::MainWindow *ui;
@@ -72,6 +72,7 @@ private:
     Abejag* abeja;
     Mapa* mapa;
     QSet<int> teclasPresionadas;
+    QSet<int> teclasPermitidas;
     bool hayColisionConPared();
     int vidas;
     void actualizarLabelVidas();
@@ -79,6 +80,8 @@ private:
     int nivelActual = 1;
     void cargarNivel(int nivel);
     Nivel2* nivel2 = nullptr;
+    QProgressBar* barraVidaGoku;
+    QProgressBar* barraVidaNam;
 
 };
 

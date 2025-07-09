@@ -16,8 +16,10 @@ QGraphicsScene* Nivel2::obtenerEscena() {
     return escena;
 }
 
-void Nivel2::iniciarNivel(Goku* goku) {
-    this->goku = goku;
+void Nivel2::iniciarNivel(Goku* goku, QProgressBar* barraGoku, QProgressBar* barraNam) {
+    this->goku = goku;this->goku = goku;
+    this->barraVidaGoku = barraGoku;
+    this->barraVidaNam = barraNam;
 
     escena->clear();
     QPixmap fondo(":/imagenes/arena.gif");
@@ -25,7 +27,7 @@ void Nivel2::iniciarNivel(Goku* goku) {
     escena->setSceneRect(0, 0, 1700, 800);
     escena->setBackgroundBrush(fondoEscalado);
 
-    goku->obtenerItem()->setPos(1640, 675);
+    goku->obtenerItem()->setPos(1000, 300);
     escena->addItem(goku->obtenerItem());
 
     nam = new Nam();
@@ -62,21 +64,29 @@ void Nivel2::moverNam() {
                 nam->puno();
             else
                 nam->punoIzq();
+            goku->reducirVida(10);  // QUITA VIDA
+            barraVidaGoku->setValue(goku->obtenerVida());
         } else if (accion == 1) {
             if (nam->mirandoDerecha)
                 nam->patada();
             else
                 nam->patadaIzq();
+            goku->reducirVida(10);  // QUITA VIDA
+            barraVidaGoku->setValue(goku->obtenerVida());
         } else if(accion == 2) {
             if (nam->mirandoDerecha)
                 nam->SPa();
             else
                 nam->SPaIzq();
+            goku->reducirVida(10);  // QUITA VIDA
+            barraVidaGoku->setValue(goku->obtenerVida());
         } else if(accion == 3) {
             if (nam->mirandoDerecha)
                 nam->SPu();
             else
                 nam->SPuIzq();
+            goku->reducirVida(10);  // QUITA VIDA
+            barraVidaGoku->setValue(goku->obtenerVida());
         }
         else {
             if (nam->mirandoDerecha)
@@ -88,3 +98,4 @@ void Nivel2::moverNam() {
 
     nam->animar();
 }
+

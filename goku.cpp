@@ -7,6 +7,7 @@ Goku::Goku()
     posX=20;
     posY=675;
     posicionInicial = QPointF(posX, posY);
+    vida = 100;
 
     ancho = 100;
     alto = 100;
@@ -187,6 +188,19 @@ void Goku::detener()
     }
 
     item->setPixmap(spriteActual->copy(x, y, ancho, alto).scaled(50, 50, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+}
+
+void Goku::reducirVida(int cantidad) {
+    vida -= cantidad;
+    if (vida < 0) vida = 0;
+}
+
+int Goku::obtenerVida() const {
+    return vida;
+}
+
+void Goku::reiniciarVida() {
+    vida = 100;
 }
 
 void Goku::reiniciarPosicion()
