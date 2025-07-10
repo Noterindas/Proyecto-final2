@@ -112,9 +112,12 @@ void MainWindow::animarSprite()
             goku->SPuIzq();
         estaAtacando = true;
 
-        if (goku->obtenerItem()->collidesWithItem(nam->obtenerItem())) {
-            nam->reducirVida(10);
-            barraVidaNam->setValue(nam->obtenerVida());
+        if (nivelActual == 2) {
+            Nam* namNivel2 = nivel2->obtenerNam();
+            if (goku->obtenerItem()->collidesWithItem(namNivel2->obtenerItem())) {
+                namNivel2->reducirVida(10);
+                barraVidaNam->setValue(namNivel2->obtenerVida());
+            }
         }
     }
     else if (teclasPresionadas.contains(Qt::Key_Space) && teclasPresionadas.contains(Qt::Key_V)) {
@@ -124,9 +127,12 @@ void MainWindow::animarSprite()
             goku->SPaIzq();
         estaAtacando = true;
 
-        if (goku->obtenerItem()->collidesWithItem(nam->obtenerItem())) {
-            nam->reducirVida(10);
-            barraVidaNam->setValue(nam->obtenerVida());
+        if (nivelActual == 2) {
+            Nam* namNivel2 = nivel2->obtenerNam();
+            if (goku->obtenerItem()->collidesWithItem(namNivel2->obtenerItem())) {
+                namNivel2->reducirVida(10);
+                barraVidaNam->setValue(namNivel2->obtenerVida());
+            }
         }
     }
 
@@ -136,15 +142,21 @@ void MainWindow::animarSprite()
 
         if (teclasPresionadas.contains(Qt::Key_C)) {
             goku->puno();
-            if (goku->obtenerItem()->collidesWithItem(nam->obtenerItem())) {
-                nam->reducirVida(10);
-                barraVidaNam->setValue(nam->obtenerVida());
+            if (nivelActual == 2) {
+                Nam* namNivel2 = nivel2->obtenerNam();
+                if (goku->obtenerItem()->collidesWithItem(namNivel2->obtenerItem())) {
+                    namNivel2->reducirVida(10);
+                    barraVidaNam->setValue(namNivel2->obtenerVida());
+                }
             }
         } else if (teclasPresionadas.contains(Qt::Key_V)) {
             goku->patada();
-            if (goku->obtenerItem()->collidesWithItem(nam->obtenerItem())) {
-                nam->reducirVida(10);
-                barraVidaNam->setValue(nam->obtenerVida());
+            if (nivelActual == 2) {
+                Nam* namNivel2 = nivel2->obtenerNam();
+                if (goku->obtenerItem()->collidesWithItem(namNivel2->obtenerItem())) {
+                    namNivel2->reducirVida(10);
+                    barraVidaNam->setValue(namNivel2->obtenerVida());
+                }
             }
         } else if (teclasPresionadas.contains(Qt::Key_Space)) {
             goku->salto();
@@ -158,15 +170,21 @@ void MainWindow::animarSprite()
 
         if (teclasPresionadas.contains(Qt::Key_C)) {
             goku->punoIzq();
-            if (goku->obtenerItem()->collidesWithItem(nam->obtenerItem())) {
-                nam->reducirVida(10);
-                barraVidaNam->setValue(nam->obtenerVida());
+            if (nivelActual == 2) {
+                Nam* namNivel2 = nivel2->obtenerNam();
+                if (goku->obtenerItem()->collidesWithItem(namNivel2->obtenerItem())) {
+                    namNivel2->reducirVida(10);
+                    barraVidaNam->setValue(namNivel2->obtenerVida());
+                }
             }
         } else if (teclasPresionadas.contains(Qt::Key_V)) {
             goku->patadaIzq();
-            if (goku->obtenerItem()->collidesWithItem(nam->obtenerItem())) {
-                nam->reducirVida(10);
-                barraVidaNam->setValue(nam->obtenerVida());
+            if (nivelActual == 2) {
+                Nam* namNivel2 = nivel2->obtenerNam();
+                if (goku->obtenerItem()->collidesWithItem(namNivel2->obtenerItem())) {
+                    namNivel2->reducirVida(10);
+                    barraVidaNam->setValue(namNivel2->obtenerVida());
+                }
             }
         } else if (teclasPresionadas.contains(Qt::Key_Space)) {
             goku->saltoIzq();
@@ -175,11 +193,11 @@ void MainWindow::animarSprite()
         }
     }
 
-    else if (teclasPresionadas.contains(Qt::Key_W)) {
+    else if (teclasPresionadas.contains(Qt::Key_W) && teclasPermitidas.contains(Qt::Key_W)) {
         dy = -6;
         goku->moverArriba();
     }
-    else if (teclasPresionadas.contains(Qt::Key_S)) {
+    else if (teclasPresionadas.contains(Qt::Key_S) && teclasPermitidas.contains(Qt::Key_S)) {
         dy = 6;
         goku->moverAbajo();
     }
@@ -198,9 +216,12 @@ void MainWindow::animarSprite()
             goku->punoIzq();
         estaAtacando = true;
 
-        if (goku->obtenerItem()->collidesWithItem(nam->obtenerItem())) {
-            nam->reducirVida(10);
-            barraVidaNam->setValue(nam->obtenerVida());
+        if (nivelActual == 2) {
+            Nam* namNivel2 = nivel2->obtenerNam();
+            if (goku->obtenerItem()->collidesWithItem(namNivel2->obtenerItem())) {
+                namNivel2->reducirVida(10);
+                barraVidaNam->setValue(namNivel2->obtenerVida());
+            }
         }
     }
     else if (teclasPresionadas.contains(Qt::Key_V)) {
@@ -210,9 +231,12 @@ void MainWindow::animarSprite()
             goku->patadaIzq();
         estaAtacando = true;
 
-        if (goku->obtenerItem()->collidesWithItem(nam->obtenerItem())) {
-            nam->reducirVida(10);
-            barraVidaNam->setValue(nam->obtenerVida());
+        if (nivelActual == 2) {
+            Nam* namNivel2 = nivel2->obtenerNam();
+            if (goku->obtenerItem()->collidesWithItem(namNivel2->obtenerItem())) {
+                namNivel2->reducirVida(10);
+                barraVidaNam->setValue(namNivel2->obtenerVida());
+            }
         }
     }
 
@@ -223,6 +247,17 @@ void MainWindow::animarSprite()
 
         if (hayColisionConPared()) {
             goku->obtenerItem()->setPos(posActual);
+        }
+
+        if (nivelActual == 2 && nivel2) {
+            Nam* namNivel2 = nivel2->obtenerNam();
+            qreal distanciaMinima = 40.0;
+            qreal distanciaActual = QLineF(goku->obtenerItem()->scenePos(), namNivel2->obtenerItem()->scenePos()).length();
+
+            if (distanciaActual < distanciaMinima) {
+                goku->obtenerItem()->setPos(posActual);
+                return;
+            }
         }
     }
 
@@ -238,6 +273,11 @@ void MainWindow::animarSprite()
         if (ventana.exec() == QDialog::Accepted && ventana.continuar()) {
             nivelActual++;
             if (nivelActual == 2) {
+                teclasPermitidas.clear();
+                teclasPresionadas.clear();
+                teclasPermitidas  << Qt::Key_A << Qt::Key_D << Qt::Key_Space << Qt::Key_V << Qt::Key_C;
+                barraVidaGoku->show();
+                barraVidaNam->show();
                 nivel2 = new Nivel2();
                 nivel2->iniciarNivel(goku, barraVidaGoku, barraVidaNam);
                 ui->graphicsView->setScene(nivel2->obtenerEscena());
@@ -247,7 +287,6 @@ void MainWindow::animarSprite()
         }
     }
 }
-
 
 void MainWindow::moverCocodrilo()
 {

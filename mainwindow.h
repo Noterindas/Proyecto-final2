@@ -6,6 +6,7 @@
 #include <QTimer>
 #include "goku.h"
 #include <QKeyEvent>
+#include <QSet>
 #include "mapa.h"
 #include "cocodrilo.h"
 #include "serpiente.h"
@@ -36,7 +37,6 @@ public:
 protected:
     void keyPressEvent(QKeyEvent *event) ;
     void keyReleaseEvent(QKeyEvent *event) ;
-    void direccionActual();
 
 private slots:
     void animarSprite();
@@ -55,9 +55,7 @@ private:
     QTimer* timerD;
     QTimer* timerAp;
     QTimer* timerAg;
-    QTimer* timerNam;
     Goku* goku;
-    Nam* nam;
     Cocodrilo* coco1;
     Cocodrilo* coco2;
     Serpiente* serpi1;

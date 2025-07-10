@@ -15,6 +15,7 @@ public:
     QGraphicsScene* obtenerEscena();
     void iniciarNivel(Goku* goku, QProgressBar* barraGoku, QProgressBar* barraNam);
     void moverNam();
+    Nam* obtenerNam();
 
 private:
     QGraphicsScene* escena;

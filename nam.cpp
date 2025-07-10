@@ -33,7 +33,7 @@ Nam::Nam()
 
     spriteActual = spriteQuieto;
 
-    item = new QGraphicsPixmapItem(spriteActual->copy(x, y, ancho, alto).scaled(50, 50, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    item = new QGraphicsPixmapItem(spriteActual->copy(x, y, ancho, alto).scaled(150, 150, Qt::KeepAspectRatio, Qt::SmoothTransformation));
     item->setPos(posX, posY);
 
     mirandoDerecha = true;
@@ -121,7 +121,7 @@ void Nam::detener()
 {
     spriteActual = spriteQuieto;
     x = 0;
-    item->setPixmap(spriteActual->copy(x, y, ancho, alto).scaled(50, 50, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    item->setPixmap(spriteActual->copy(x, y, ancho, alto).scaled(150, 150, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 }
 
 void Nam::animar()
@@ -130,7 +130,7 @@ void Nam::animar()
     if (x >= spriteActual->width()) {
         x = 0;
     }
-    item->setPixmap(spriteActual->copy(x, y, ancho, alto).scaled(50, 50, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    item->setPixmap(spriteActual->copy(x, y, ancho, alto).scaled(150, 150, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 }
 
 void Nam::reducirVida(int cantidad) {
