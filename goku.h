@@ -3,10 +3,11 @@
 
 #include <QGraphicsPixmapItem>
 #include <QPixmap>
+#include <QTimer>
 
 class Goku {
 public:
-    Goku();
+    Goku(int anchoVisual = 50, int altoVisual = 50);
     ~Goku();
 
     void animar();
@@ -24,6 +25,7 @@ public:
     void SPaIzq();
     void SPu();
     void SPuIzq();
+    void saltar();
     void detener();
     void reiniciarPosicion();
     QGraphicsPixmapItem* obtenerItem();
@@ -31,6 +33,9 @@ public:
     void reducirVida(int cantidad);
     int obtenerVida() const;
     void reiniciarVida();
+    bool estaSiendoEmpujado;
+    int contadorEmpuje;
+    int direccionEmpuje;
 
 private:
     QPixmap* spriteDerecha;
@@ -49,12 +54,15 @@ private:
     QPixmap* spriteSPaIzq;
     QPixmap* spriteSPu;
     QPixmap* spriteSPuIzq;
+    QPixmap* spriteGolpe;
     QPointF posicionInicial;
     QGraphicsPixmapItem* item;
     int ancho, alto;
     int x, y;
     int posX, posY;
     int vida;
+    int anchoVisual;
+    int altoVisual;
 
 };
 

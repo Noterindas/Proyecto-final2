@@ -28,7 +28,6 @@
         <file>imagenes/NP.png</file>
         <file>imagenes/NPa.png</file>
         <file>imagenes/NPu.png</file>
-        <file>imagenes/NSalto.png</file>
         <file>imagenes/NSPa.png</file>
         <file>imagenes/NSPu.png</file>
         <file>imagenes/GPa.png</file>
@@ -39,11 +38,12 @@
         <file>imagenes/GSPaIzq.png</file>
         <file>imagenes/NPaIzq.png</file>
         <file>imagenes/NPuIzq.png</file>
-        <file>imagenes/NSaltoIzq.png</file>
         <file>imagenes/NSPaIzq.png</file>
         <file>imagenes/NSPuIzq.png</file>
         <file>imagenes/NCD.png</file>
         <file>imagenes/NCDIzq.png</file>
         <file>imagenes/arena.gif</file>
+        <file>imagenes/GG.png</file>
+        <file>imagenes/NG.png</file>
     </qresource>
 </RCC>

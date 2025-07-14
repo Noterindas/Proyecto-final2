@@ -1,7 +1,7 @@
 #include "gamerover.h"
 #include "ui_gamerover.h"
 
-GamerOver::GamerOver(QWidget *parent)
+GamerOver::GamerOver(QWidget *parent, bool soloSalir)
     : QDialog(parent)
     , ui(new Ui::GamerOver)
 {
@@ -11,6 +11,10 @@ GamerOver::GamerOver(QWidget *parent)
     QPixmap imagen(":/imagenes/GameOver.jpeg");
     ui->labelImagen->setPixmap(imagen);
     ui->labelImagen->setScaledContents(true);
+
+    if (soloSalir) {
+        ui->btnReintentar->hide();
+    }
 }
 
 void GamerOver::on_btnReintentar_clicked()

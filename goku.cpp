@@ -1,11 +1,12 @@
 #include "goku.h"
 
-Goku::Goku()
+Goku::Goku(int anchoVisual, int altoVisual)
+    : anchoVisual(anchoVisual), altoVisual(altoVisual)
 {
     x=0;
     y=0;
-    posX=20;
-    posY=675;
+    posX=1640;
+    posY=380;
     posicionInicial = QPointF(posX, posY);
     vida = 100;
 
@@ -42,13 +43,18 @@ Goku::Goku()
 
     spriteSPuIzq= new QPixmap(":/imagenes/GSPuIzq.png");
 
+    spriteGolpe= new QPixmap(":/imagenes/GG.png");
+
     spriteActual = spriteQuieto;
 
-    item = new QGraphicsPixmapItem(spriteActual->copy(x, y, ancho, alto).scaled(50, 50, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    item = new QGraphicsPixmapItem(spriteActual->copy(x, y, ancho, alto).scaled(anchoVisual, altoVisual, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
     item->setPos(posX, posY);
 
     mirandoDerecha = true;
+    estaSiendoEmpujado = false;
+    contadorEmpuje = 0;
+    direccionEmpuje = 0;
 
 }
 
@@ -168,15 +174,36 @@ void Goku::SPaIzq()
     }
 }
 
-
 void Goku::animar()
 {
+    if (estaSiendoEmpujado) {
+        QPointF posActual = item->pos();
+
+        qreal nuevoX = posActual.x() + direccionEmpuje;
+
+       nuevoX = qBound(0.0, nuevoX, 1710.0 - item->boundingRect().width());
+
+        item->setPos(nuevoX, posActual.y());
+
+        contadorEmpuje--;
+
+        item->setPixmap(spriteGolpe->copy(x, y, ancho, alto).scaled(anchoVisual, altoVisual, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+
+        if (contadorEmpuje <= 0) {
+            estaSiendoEmpujado = false;
+            direccionEmpuje = 0;
+            spriteActual = spriteQuieto;
+        }
+
+        return;
+    }
+
     x += ancho;
     if (x >= spriteActual->width()) {
         x = 0;
     }
 
-    item->setPixmap(spriteActual->copy(x, y, ancho, alto).scaled(50, 50, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    item->setPixmap(spriteActual->copy(x, y, ancho, alto).scaled(anchoVisual, altoVisual, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 }
 
 
@@ -187,7 +214,7 @@ void Goku::detener()
         x = 0;
     }
 
-    item->setPixmap(spriteActual->copy(x, y, ancho, alto).scaled(50, 50, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    item->setPixmap(spriteActual->copy(x, y, ancho, alto).scaled(anchoVisual, altoVisual, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 }
 
 void Goku::reducirVida(int cantidad) {

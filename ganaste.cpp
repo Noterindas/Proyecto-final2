@@ -1,7 +1,7 @@
 #include "ganaste.h"
 #include "ui_ganaste.h"
 
-Ganaste::Ganaste(QWidget *parent)
+Ganaste::Ganaste(QWidget *parent, bool soloSalir)
     : QDialog(parent)
     , ui(new Ui::Ganaste)
 {
@@ -12,6 +12,10 @@ Ganaste::Ganaste(QWidget *parent)
     QPixmap imagen(":/imagenes/Win.jpeg");
     ui->labelImagen->setPixmap(imagen);
     ui->labelImagen->setScaledContents(true);
+
+    if (soloSalir) {
+        ui->btnSiguienteLvl->hide();
+    }
 }
 
 void Ganaste::on_btnSiguienteLvl_clicked()

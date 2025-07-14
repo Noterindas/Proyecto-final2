@@ -12,7 +12,7 @@ class Ganaste : public QDialog
     Q_OBJECT
 
 public:
-    explicit Ganaste(QWidget *parent = nullptr);
+    explicit Ganaste(QWidget *parent = nullptr, bool soloSalir = false);
     bool continuar() const;
     ~Ganaste();
 

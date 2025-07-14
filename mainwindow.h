@@ -56,6 +56,7 @@ private:
     QTimer* timerAp;
     QTimer* timerAg;
     Goku* goku;
+    Nam* namNivel2;
     Cocodrilo* coco1;
     Cocodrilo* coco2;
     Serpiente* serpi1;
@@ -77,9 +78,10 @@ private:
     void reiniciarJuego();
     int nivelActual = 1;
     void cargarNivel(int nivel);
-    Nivel2* nivel2 = nullptr;
+    Nivel2* nivel2;
     QProgressBar* barraVidaGoku;
     QProgressBar* barraVidaNam;
+    void limpiar();
 
 };
 

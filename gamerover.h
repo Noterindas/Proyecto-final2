@@ -12,7 +12,7 @@ class GamerOver : public QDialog
     Q_OBJECT
 
 public:
-    explicit GamerOver(QWidget *parent = nullptr);
+    explicit GamerOver(QWidget *parent = nullptr, bool soloSalir = false);
     bool quiereReintentar() const;
     ~GamerOver();
 

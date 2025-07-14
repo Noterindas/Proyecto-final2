@@ -9,27 +9,9 @@ MainWindow::MainWindow(QWidget *parent)
     escena = new QGraphicsScene(this);
     ui->graphicsView->setScene(escena);
 
-    goku = new Goku();
-    timer = new QTimer(this);
-    connect(timer, &QTimer::timeout, this, &MainWindow::animarSprite);
-    timer->start(80);
-
     vidas = 3;
     nivelActual = 1;
     cargarNivel(nivelActual);
-
-    barraVidaGoku = new QProgressBar(this);
-    barraVidaGoku->setGeometry(50, 30, 200, 20);
-    barraVidaGoku->setRange(0, 100);
-    barraVidaGoku->setValue(100);
-
-    barraVidaNam = new QProgressBar(this);
-    barraVidaNam->setGeometry(1450, 30, 200, 20);
-    barraVidaNam->setRange(0, 100);
-    barraVidaNam->setValue(100);
-
-    barraVidaGoku->hide();
-    barraVidaNam->hide();
 }
 
 void MainWindow::actualizarLabelVidas()
@@ -48,6 +30,7 @@ void MainWindow::cargarNivel(int nivel)
         mapa = new Mapa(escena);
         mapa->generarMapa();
 
+        goku = new Goku(50, 50);
         goku->reiniciarPosicion();
         escena->addItem(goku->obtenerItem());
 
@@ -79,6 +62,10 @@ void MainWindow::cargarNivel(int nivel)
         escena->addItem(abeja2->obtenerItem());
         escena->addItem(abeja->obtenerItem());
 
+        timer = new QTimer(this);
+        connect(timer, &QTimer::timeout, this, &MainWindow::animarSprite);
+        timer->start(80);
+
         timerC = new QTimer(this);
         connect(timerC, &QTimer::timeout, this, &MainWindow::moverCocodrilo);
         timerC->start(100);
@@ -99,7 +86,67 @@ void MainWindow::cargarNivel(int nivel)
         connect(timerAg, &QTimer::timeout, this, &MainWindow::moverAbejag);
         timerAg->start(80);
     }
+
+    if (nivel == 2) {
+        teclasPermitidas << Qt::Key_A << Qt::Key_D << Qt::Key_Space << Qt::Key_C << Qt::Key_V;
+
+        nivel2 = new Nivel2();
+        nivel2->iniciarNivel();
+
+        goku = nivel2->obtenerGoku();
+        namNivel2 = nivel2->obtenerNam();
+
+        escena = nivel2->obtenerEscena();
+        ui->graphicsView->setScene(escena);
+
+        barraVidaGoku = nivel2->obtenerBarraVidaGoku();
+        barraVidaNam = nivel2->obtenerBarraVidaNam();
+
+        barraVidaGoku->setParent(this);
+        barraVidaNam->setParent(this);
+
+        barraVidaGoku->setGeometry(50, 30, 200, 20);
+        barraVidaNam->setGeometry(1450, 30, 200, 20);
+
+        barraVidaGoku->show();
+        barraVidaNam->show();
+
+        timer = new QTimer(this);
+        connect(timer, &QTimer::timeout, this, &MainWindow::animarSprite);
+        timer->start(80);
+    }
 }
+
+void MainWindow::limpiar()
+{
+    if (goku) {
+        delete goku;
+        goku = nullptr;
+    }
+
+    delete coco1; coco1 = nullptr;
+    delete coco2; coco2 = nullptr;
+    delete serpi1; serpi1 = nullptr;
+    delete serpi2; serpi2 = nullptr;
+    delete serpi3; serpi3 = nullptr;
+    delete serpi4; serpi4 = nullptr;
+    delete dino1; dino1 = nullptr;
+    delete dino2; dino2 = nullptr;
+    delete dino3; dino3 = nullptr;
+    delete abeja1; abeja1 = nullptr;
+    delete abeja2; abeja2 = nullptr;
+    delete abeja;  abeja = nullptr;
+
+    delete mapa; mapa = nullptr;
+
+    if (timer) { timer->stop(); delete timer; timer = nullptr; }
+    if (timerC) { timerC->stop(); delete timerC; timerC = nullptr; }
+    if (timerS) { timerS->stop(); delete timerS; timerS = nullptr; }
+    if (timerD) { timerD->stop(); delete timerD; timerD = nullptr; }
+    if (timerAp){ timerAp->stop(); delete timerAp; timerAp = nullptr; }
+    if (timerAg){ timerAg->stop(); delete timerAg; timerAg = nullptr; }
+}
+
 void MainWindow::animarSprite()
 {
     bool estaAtacando = false;
@@ -113,10 +160,13 @@ void MainWindow::animarSprite()
         estaAtacando = true;
 
         if (nivelActual == 2) {
-            Nam* namNivel2 = nivel2->obtenerNam();
             if (goku->obtenerItem()->collidesWithItem(namNivel2->obtenerItem())) {
-                namNivel2->reducirVida(10);
+                namNivel2->reducirVida(4);
                 barraVidaNam->setValue(namNivel2->obtenerVida());
+
+                namNivel2->estaSiendoEmpujado = true;
+                namNivel2->contadorEmpuje = 10;
+                namNivel2->direccionEmpuje = goku->mirandoDerecha ? 18 : -18;
             }
         }
     }
@@ -128,10 +178,13 @@ void MainWindow::animarSprite()
         estaAtacando = true;
 
         if (nivelActual == 2) {
-            Nam* namNivel2 = nivel2->obtenerNam();
             if (goku->obtenerItem()->collidesWithItem(namNivel2->obtenerItem())) {
-                namNivel2->reducirVida(10);
+                namNivel2->reducirVida(4);
                 barraVidaNam->setValue(namNivel2->obtenerVida());
+
+                namNivel2->estaSiendoEmpujado = true;
+                namNivel2->contadorEmpuje = 10;
+                namNivel2->direccionEmpuje = goku->mirandoDerecha ? 18 : -18;
             }
         }
     }
@@ -143,19 +196,25 @@ void MainWindow::animarSprite()
         if (teclasPresionadas.contains(Qt::Key_C)) {
             goku->puno();
             if (nivelActual == 2) {
-                Nam* namNivel2 = nivel2->obtenerNam();
                 if (goku->obtenerItem()->collidesWithItem(namNivel2->obtenerItem())) {
-                    namNivel2->reducirVida(10);
+                    namNivel2->reducirVida(4);
                     barraVidaNam->setValue(namNivel2->obtenerVida());
+
+                    namNivel2->estaSiendoEmpujado = true;
+                    namNivel2->contadorEmpuje = 10;
+                    namNivel2->direccionEmpuje = goku->mirandoDerecha ? 18 : -18;
                 }
             }
         } else if (teclasPresionadas.contains(Qt::Key_V)) {
             goku->patada();
             if (nivelActual == 2) {
-                Nam* namNivel2 = nivel2->obtenerNam();
                 if (goku->obtenerItem()->collidesWithItem(namNivel2->obtenerItem())) {
-                    namNivel2->reducirVida(10);
+                    namNivel2->reducirVida(4);
                     barraVidaNam->setValue(namNivel2->obtenerVida());
+
+                    namNivel2->estaSiendoEmpujado = true;
+                    namNivel2->contadorEmpuje = 10;
+                    namNivel2->direccionEmpuje = goku->mirandoDerecha ? 18 : -18;
                 }
             }
         } else if (teclasPresionadas.contains(Qt::Key_Space)) {
@@ -171,19 +230,25 @@ void MainWindow::animarSprite()
         if (teclasPresionadas.contains(Qt::Key_C)) {
             goku->punoIzq();
             if (nivelActual == 2) {
-                Nam* namNivel2 = nivel2->obtenerNam();
                 if (goku->obtenerItem()->collidesWithItem(namNivel2->obtenerItem())) {
-                    namNivel2->reducirVida(10);
+                    namNivel2->reducirVida(4);
                     barraVidaNam->setValue(namNivel2->obtenerVida());
+
+                    namNivel2->estaSiendoEmpujado = true;
+                    namNivel2->contadorEmpuje = 10;
+                    namNivel2->direccionEmpuje = goku->mirandoDerecha ? 18 : -18;
                 }
             }
         } else if (teclasPresionadas.contains(Qt::Key_V)) {
             goku->patadaIzq();
             if (nivelActual == 2) {
-                Nam* namNivel2 = nivel2->obtenerNam();
                 if (goku->obtenerItem()->collidesWithItem(namNivel2->obtenerItem())) {
-                    namNivel2->reducirVida(10);
+                    namNivel2->reducirVida(4);
                     barraVidaNam->setValue(namNivel2->obtenerVida());
+
+                    namNivel2->estaSiendoEmpujado = true;
+                    namNivel2->contadorEmpuje = 10;
+                    namNivel2->direccionEmpuje = goku->mirandoDerecha ? 18 : -18;
                 }
             }
         } else if (teclasPresionadas.contains(Qt::Key_Space)) {
@@ -217,10 +282,13 @@ void MainWindow::animarSprite()
         estaAtacando = true;
 
         if (nivelActual == 2) {
-            Nam* namNivel2 = nivel2->obtenerNam();
             if (goku->obtenerItem()->collidesWithItem(namNivel2->obtenerItem())) {
-                namNivel2->reducirVida(10);
+                namNivel2->reducirVida(4);
                 barraVidaNam->setValue(namNivel2->obtenerVida());
+
+                namNivel2->estaSiendoEmpujado = true;
+                namNivel2->contadorEmpuje = 10;
+                namNivel2->direccionEmpuje = goku->mirandoDerecha ? 18 : -18;
             }
         }
     }
@@ -232,10 +300,13 @@ void MainWindow::animarSprite()
         estaAtacando = true;
 
         if (nivelActual == 2) {
-            Nam* namNivel2 = nivel2->obtenerNam();
             if (goku->obtenerItem()->collidesWithItem(namNivel2->obtenerItem())) {
-                namNivel2->reducirVida(10);
+                namNivel2->reducirVida(4);
                 barraVidaNam->setValue(namNivel2->obtenerVida());
+
+                namNivel2->estaSiendoEmpujado = true;
+                namNivel2->contadorEmpuje = 10;
+                namNivel2->direccionEmpuje = goku->mirandoDerecha ? 18 : -18;
             }
         }
     }
@@ -243,21 +314,14 @@ void MainWindow::animarSprite()
     if (dx != 0 || dy != 0) {
         QPointF posActual = goku->obtenerItem()->pos();
         QPointF nuevaPos = posActual + QPointF(dx, dy);
-        goku->obtenerItem()->setPos(nuevaPos);
+
+        QRectF limites = escena->sceneRect();
+        qreal nuevoX = qBound(limites.left(), nuevaPos.x(), limites.right() - goku->obtenerItem()->boundingRect().width());
+        qreal nuevoY = qBound(limites.top(), nuevaPos.y(), limites.bottom() - goku->obtenerItem()->boundingRect().height());
+        goku->obtenerItem()->setPos(nuevoX, nuevoY);
 
         if (hayColisionConPared()) {
             goku->obtenerItem()->setPos(posActual);
-        }
-
-        if (nivelActual == 2 && nivel2) {
-            Nam* namNivel2 = nivel2->obtenerNam();
-            qreal distanciaMinima = 40.0;
-            qreal distanciaActual = QLineF(goku->obtenerItem()->scenePos(), namNivel2->obtenerItem()->scenePos()).length();
-
-            if (distanciaActual < distanciaMinima) {
-                goku->obtenerItem()->setPos(posActual);
-                return;
-            }
         }
     }
 
@@ -268,23 +332,40 @@ void MainWindow::animarSprite()
     goku->animar();
 
     QPointF pos = goku->obtenerItem()->pos();
-    if (pos.x() >= 5 && pos.x() <= 15 && pos.y() >= 670 && pos.y() <= 680) {
-        Ganaste ventana(this);
-        if (ventana.exec() == QDialog::Accepted && ventana.continuar()) {
-            nivelActual++;
-            if (nivelActual == 2) {
-                teclasPermitidas.clear();
-                teclasPresionadas.clear();
-                teclasPermitidas  << Qt::Key_A << Qt::Key_D << Qt::Key_Space << Qt::Key_V << Qt::Key_C;
-                barraVidaGoku->show();
-                barraVidaNam->show();
-                nivel2 = new Nivel2();
-                nivel2->iniciarNivel(goku, barraVidaGoku, barraVidaNam);
-                ui->graphicsView->setScene(nivel2->obtenerEscena());
+    if(nivelActual == 1){
+        if (pos.x() >= 5 && pos.x() <= 15 && pos.y() >= 660 && pos.y() <= 690) {
+            Ganaste ventana(this);
+            if (ventana.exec() == QDialog::Accepted && ventana.continuar()) {
+                nivelActual++;
+                if (nivelActual == 2) {
+                     limpiar();
+                    ui->labelVidas->hide();
+                    cargarNivel(nivelActual);
+                    teclasPermitidas = { Qt::Key_A, Qt::Key_D, Qt::Key_Space, Qt::Key_C,  Qt::Key_V};
+                    teclasPresionadas.clear();
+                }
+            } else {
+                close();
             }
-        } else {
-            close();
         }
+    }
+
+    if (nivelActual == 2 && goku->obtenerVida() <= 0) {
+        timer->stop();
+
+        GamerOver ventana(this, true);
+        ventana.exec();
+        close();
+        return;
+    }
+
+    if (nivelActual == 2 && namNivel2->obtenerVida() <= 0) {
+        timer->stop();
+
+        Ganaste ventana(this, true);
+        ventana.exec();
+        close();
+        return;
     }
 }
 
@@ -432,6 +513,8 @@ void MainWindow::reiniciarJuego()
 
 bool MainWindow::hayColisionConPared()
 {
+    if (!mapa) return false;
+
     QRectF gokuRect = goku->obtenerItem()->sceneBoundingRect();
 
     for (QGraphicsItem* pared : mapa->obtenerParedes()) {
@@ -480,4 +563,5 @@ MainWindow::~MainWindow()
     delete mapa;
     delete escena;
     delete ui;
+    delete nivel2;
 }

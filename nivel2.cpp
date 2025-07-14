@@ -6,106 +6,126 @@ Nivel2::Nivel2() {
     escena = new QGraphicsScene();
 }
 
-Nivel2::~Nivel2() {
-    delete escena;
-    delete nam;
-    delete timerNam;
+void Nivel2::iniciarNivel()
+{
+    escena = new QGraphicsScene();
+    escena->setSceneRect(0, 0, 1710, 810);
+
+    QPixmap fondo(":/imagenes/arena.gif");
+    QPixmap fondoEscalado = fondo.scaled(1710, 810, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+    escena->setBackgroundBrush(fondoEscalado);
+
+    goku = new Goku(200, 200);
+    goku->obtenerItem()->setPos(100, 600);
+    escena->addItem(goku->obtenerItem());
+
+    nam = new Nam(200, 200);
+    nam->obtenerItem()->setPos(1200, 600);
+    escena->addItem(nam->obtenerItem());
+
+    barraVidaGoku = new QProgressBar();
+    barraVidaGoku->setRange(0, 100);
+    barraVidaGoku->setValue(100);
+
+    barraVidaNam = new QProgressBar();
+    barraVidaNam->setRange(0, 100);
+    barraVidaNam->setValue(100);
+
+    timerNam = new QTimer(this);
+    connect(timerNam, &QTimer::timeout, this, &Nivel2::moverNam);
+    timerNam->start(100);
 }
 
 QGraphicsScene* Nivel2::obtenerEscena() {
     return escena;
 }
 
-void Nivel2::iniciarNivel(Goku* goku, QProgressBar* barraGoku, QProgressBar* barraNam) {
-    this->goku = goku;this->goku = goku;
-    this->barraVidaGoku = barraGoku;
-    this->barraVidaNam = barraNam;
-
-    escena->clear();
-    QPixmap fondo(":/imagenes/arena.gif");
-    QPixmap fondoEscalado = fondo.scaled(1700, 800, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-    escena->setSceneRect(0, 0, 1700, 800);
-    escena->setBackgroundBrush(fondoEscalado);
-
-    goku->obtenerItem()->setPos(1000, 300);
-    escena->addItem(goku->obtenerItem());
-
-    nam = new Nam();
-    nam->obtenerItem()->setPos(700, 300);
-    escena->addItem(nam->obtenerItem());
-
-    timerNam = new QTimer();
-    QObject::connect(timerNam, &QTimer::timeout, [=]() {
-        moverNam();
-    });
-    timerNam->start(110);
-}
-
 void Nivel2::moverNam() {
     QPointF posNam = nam->obtenerItem()->pos();
     QPointF posGoku = goku->obtenerItem()->pos();
 
-    qreal distanciaMinima = 45.0;  // Puedes ajustar este valor
-    qreal distanciaActual = QLineF(posNam, posGoku).length();
+    qreal distancia = QLineF(posNam, posGoku).length();
 
-    // Si están demasiado cerca, no se mueve
-    if (distanciaActual < distanciaMinima) {
-        // Pero sí puede atacar si está en rango
-        if (qAbs(posGoku.x() - posNam.x()) < 60 && qAbs(posGoku.y() - posNam.y()) < 40) {
-            int accion = QRandomGenerator::global()->bounded(5);
-            if (accion == 0) {
-                if (nam->mirandoDerecha)
-                    nam->puno();
-                else
-                    nam->punoIzq();
-            } else if (accion == 1) {
-                if (nam->mirandoDerecha)
-                    nam->patada();
-                else
-                    nam->patadaIzq();
-            } else if (accion == 2) {
-                if (nam->mirandoDerecha)
-                    nam->SPa();
-                else
-                    nam->SPaIzq();
-            } else if (accion == 3) {
-                if (nam->mirandoDerecha)
-                    nam->SPu();
-                else
-                    nam->SPuIzq();
-            } else {
-                if (nam->mirandoDerecha)
-                    nam->salto();
-                else
-                    nam->saltoIzq();
-            }
-
-            goku->reducirVida(10);
-            barraVidaGoku->setValue(goku->obtenerVida());
+    if (distancia < 110) {
+        int accion = QRandomGenerator::global()->bounded(5);
+        if (accion == 0) {
+            if (nam->mirandoDerecha)
+                nam->puno();
+            else
+                nam->punoIzq();
+        } else if (accion == 1) {
+            if (nam->mirandoDerecha)
+                nam->patada();
+            else
+                nam->patadaIzq();
+        } else if (accion == 2) {
+            if (nam->mirandoDerecha)
+                nam->SPa();
+            else
+                nam->SPaIzq();
+        } else if (accion == 3) {
+            if (nam->mirandoDerecha)
+                nam->SPu();
+            else
+                nam->SPuIzq();
         }
 
-        nam->animar();
-        return;
+        if (nam->obtenerItem()->collidesWithItem(goku->obtenerItem()) && nam->golpeAplicado==false) {
+            goku->reducirVida(10);
+            barraVidaGoku->setValue(goku->obtenerVida());
+
+            goku->estaSiendoEmpujado = true;
+            goku->contadorEmpuje = 10;
+            goku->direccionEmpuje = nam->mirandoDerecha ? 18 : -18;
+
+            nam->golpeAplicado = true;
+        }
     }
 
-    // Si está lejos, se mueve hacia Goku
     qreal dx = 0;
-    if (posGoku.x() > posNam.x()) {
-        dx = 6;
-        nam->moverDerecha();
-    } else if (posGoku.x() < posNam.x()) {
-        dx = -6;
-        nam->moverIzquierda();
+    if (distancia > 90) {
+        if (posGoku.x() > posNam.x()) {
+            dx = 6;
+            nam->moverDerecha();
+        } else if (posGoku.x() < posNam.x()) {
+            dx = -6;
+            nam->moverIzquierda();
+        }
     }
 
     QPointF nuevaPos = posNam + QPointF(dx, 0);
-    nam->obtenerItem()->setPos(nuevaPos);
+    QRectF limites = escena->sceneRect();
+    qreal nuevoX = qBound(limites.left(), nuevaPos.x(), limites.right() - nam->obtenerItem()->boundingRect().width());
+    qreal nuevoY = qBound(limites.top(), nuevaPos.y(), limites.bottom() - nam->obtenerItem()->boundingRect().height());
+    nam->obtenerItem()->setPos(nuevoX, nuevoY);
 
     nam->animar();
+}
+
+Goku* Nivel2::obtenerGoku() {
+    return goku;
 }
 
 Nam* Nivel2::obtenerNam() {
     return nam;
 }
+
+QProgressBar* Nivel2::obtenerBarraVidaGoku() {
+    return barraVidaGoku;
+}
+
+QProgressBar* Nivel2::obtenerBarraVidaNam() {
+    return barraVidaNam;
+}
+
+
+Nivel2::~Nivel2() {
+    delete escena;
+    delete nam;
+    delete timerNam;
+    delete barraVidaGoku;
+    delete barraVidaNam;
+}
+
 
 

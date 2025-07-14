@@ -6,7 +6,7 @@
 
 class Nam {
 public:
-    Nam();
+    Nam(int anchoVisual, int altoVisual);
     ~Nam();
 
     void animar();
@@ -29,6 +29,12 @@ public:
     void reducirVida(int cantidad);
     int obtenerVida() const;
     void reiniciarVida();
+    bool estaSiendoEmpujado;
+    int contadorEmpuje;
+    int direccionEmpuje;
+    bool estaAtacando;
+    int contadorAtaque;
+    bool golpeAplicado;
 
 private:
     QPixmap* spriteDerecha;
@@ -37,20 +43,21 @@ private:
     QPixmap* spriteQuieto;
     QPixmap* spritePuno;
     QPixmap* spritePunoIzq;
-    QPixmap* spriteSalto;
-    QPixmap* spriteSaltoIzq;
     QPixmap* spritePatada;
     QPixmap* spritePatadaIzq;
     QPixmap* spriteSPa;
     QPixmap* spriteSPaIzq;
     QPixmap* spriteSPu;
     QPixmap* spriteSPuIzq;
+    QPixmap* spriteGolpe;
     QPointF posicionInicial;
     QGraphicsPixmapItem* item;
     int ancho, alto;
     int x, y;
     int posX, posY;
     int vida;
+    int anchoVisual;
+    int altoVisual;
 };
 
 #endif
